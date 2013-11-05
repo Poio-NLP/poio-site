@@ -73,12 +73,12 @@ def main(argv):
                 for chunk in r.iter_content(1024):
                     f.write(chunk)
 
-        if filename.endswith(".sqlite.zip"):
-            print("  unzipping file...")
-            myzip = ZipFile(target_path, "r")
-            myzip.extractall(os.path.join(static_data_path, subdir))
-            myzip.close()
-            os.remove(target_path)
+            if filename.endswith(".sqlite.zip"):
+                print("  unzipping file...")
+                myzip = ZipFile(target_path, "r")
+                myzip.extractall(os.path.join(static_data_path, subdir))
+                myzip.close()
+                os.remove(target_path)
 
 if __name__ == "__main__":
     main(sys.argv)
