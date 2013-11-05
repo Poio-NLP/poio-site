@@ -78,7 +78,7 @@ def main(argv):
             myzip = ZipFile(target_path, "r")
             myzip.extractall(os.path.join(static_data_path, subdir))
             myzip.close()
-            os.remove(filename)
+            os.remove(target_path)
 
 if __name__ == "__main__":
     main(sys.argv)
