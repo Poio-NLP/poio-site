@@ -19,12 +19,12 @@ class MainTestCase(unittest.TestCase):
     def test_main(self):
         """Test rendered index page."""
         rv = self.app.get('/')
-        assert 'Poio Corpus' in rv.data
+        assert 'Language Diversity' in rv.data
 
     def test_about(self):
         """Test rendered about page."""
         rv = self.app.get('/about')
-        assert 'Poio Corpus' in rv.data
+        assert 'Language Diversity' in rv.data
 
     def test_corpus(self):
         """Test rendered corpus page."""
