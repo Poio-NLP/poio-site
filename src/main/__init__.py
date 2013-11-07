@@ -12,7 +12,6 @@ import glob
 import json
 import pickle
 import operator
-import json
 import codecs
 try:
     import configparser
@@ -38,23 +37,19 @@ cache = SimpleCache()
 app = Flask(__name__)
 Mobility(app)
 
+# Import flask modules after defining app:
+
+import api 
+
+
+# Get languages:
+
 languages_data = {}
 languages_data_file = os.path.join(app.static_folder, 'langinfo',
     'languages_data.pickle')
 with open(languages_data_file, "rb") as f:
     languages_data = pickle.load(f)
 
-
-class DemoCallback(pressagio.callback.Callback):
-    def __init__(self, buffer):
-        pressagio.callback.Callback.__init__(self)
-        self.buffer = buffer
-
-    def past_stream(self):
-        return self.buffer
-    
-    def future_stream(self):
-        return ''
 
 ###################################### Pages
 
@@ -114,6 +109,7 @@ def tools():
         languages_semantics = iso_codes_semantics,
         languages_prediction = iso_codes_prediction)
 
+
 @app.route("/tools/semantics/<iso>", methods=["POST"])
 def tools_semantics_term(iso):
     term = None
@@ -128,108 +124,30 @@ def tools_semantics_term(iso):
 @app.route("/tools/semantics/<iso>")
 @app.route("/tools/semantics/<iso>/<term>")
 def tools_semantics(iso, term=None):
-    #map_file = ""
-    if term != None:
-        graphdata = get_semantic_map(iso, term)
-        # if not map_file:
-        #     flash('No result for search term "{0}".'.format(term))
-        # else:
-        #     return render_template('tools_semantics.html', iso=iso,
-        #         map=map_file.encode('utf-8'), term=term)
-        graphdata_json = json.dumps(graphdata)
-        return render_template('tools_semantics.html', iso=iso,
-                map=None, term=term, graphdata_json = Markup(graphdata_json))
-    return render_template('tools_semantics.html', iso=iso,
-                map=None, term=term)
+    return render_template('tools_semantics.html', iso=iso, term=term)
+
 
 @app.route("/tools/prediction/<iso>")
 @mobile_template('{mobile/}tools_prediction.html')
 def tools_prediction(template, iso):
     return render_template(template, iso=iso)
 
-@app.route("/_prediction")
-def prediction():
-    iso = request.args.get('iso', '', type=str)
-    string_buffer = request.args.get('text', '')
-
-    db_file = os.path.abspath(os.path.join(app.static_folder, 'prediction', "{0}.sqlite".format(iso)))
-    config_file = os.path.join(app.static_folder, 'prediction', "{0}.ini".format(iso))
-    config = configparser.ConfigParser()
-    config.read(config_file)
-    config.set("Database", "database", db_file)
-
-    callback = DemoCallback(string_buffer)
-    prsgio = pressagio.Pressagio(callback, config)
-    predictions = prsgio.predict()
-
-    return Response(json.dumps(predictions), mimetype='application/json')
 
 @app.route("/documentation")
 def documentation():
     return render_template('documentation.html')
 
+
 @app.route("/imprint")
 def imprint():
     return render_template('imprint.html')
+
 
 @app.route("/privacy")
 def privacy():
     return render_template('privacy.html')
 
+
 @app.route("/licenses")
 def licenses():
     return render_template('licenses.html')
-
-##################################### Helpers
-
-def get_semantic_map(iso, term):
-    plot_dir = os.path.join(app.static_folder, 'plots')
-    plot_filename = u"{0}-{1}.pickle".format(iso, term)
-    plot_filepath = os.path.join(plot_dir, plot_filename)
-
-    if os.path.exists(plot_filepath):
-        inputfile = open(plot_filepath, 'rb')
-        graphdata = pickle.load(inputfile)
-        inputfile.close()
-        return graphdata
-
-    sem_dir = os.path.join(app.static_folder, 'semantics')
-
-    indices_file = os.path.join(sem_dir, "{0}-indices.pickle".format(iso))
-    with open(indices_file, "rb") as f:
-        indices = pickle.load(f)
-        keys = [k 
-            for k, _ in sorted(indices.items(), key=operator.itemgetter(1))]
-    if not term in indices:
-        return None
-
-
-    ut_file = os.path.join(sem_dir, "{0}-ut.bin".format(iso))
-    with open(ut_file, "rb") as f:
-        ut = np.load(f)
-    s_file = os.path.join(sem_dir, "{0}-s.bin".format(iso))
-    with open(s_file, "rb") as f:
-        s = np.load(f)
-    vt_file = os.path.join(sem_dir, "{0}-vt.bin".format(iso))
-    with open(vt_file, "rb") as f:
-        vt = np.load(f)
-
-    reconstructed_matrix = np.dot(ut.T, np.dot(np.diag(s), vt))
-    tree = scipy.spatial.cKDTree(reconstructed_matrix)
-    neighbours = tree.query(reconstructed_matrix[indices[term]], k=50)
-
-    subset = reconstructed_matrix[neighbours[1]]
-    words = [keys[i] for i in neighbours[1]]
-    tempU, tempS, tempVt = scipy.linalg.svd(subset)
-
-    graphdata = []
-    count = 0
-    for element in tempU[:,1]:
-        graphdata.append([words[count], element, tempU[:,2][count]])
-        count += 1
-
-    outputfile = open(plot_filepath, 'wb')
-    pickle.dump(graphdata, outputfile)
-    outputfile.close()
-    return graphdata
-
