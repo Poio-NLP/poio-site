@@ -36,6 +36,21 @@
     <!--<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
 
     <script>
+        //GET DATA
+        var xmlHttp = null, 
+            data = null;
+
+        xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", ($SCRIPT_ROOT + '/api/semantics?iso={{ iso }}&term={{ term }}'), false );
+        xmlHttp.send( null );
+
+        data = JSON.parse(xmlHttp.responseText);
+        
+        if (data == null) return; //does not work
+
+        document.createComment("<!-- SEMANTIC MAP TEST DATA: \n" + data + "\n-->");
+        //
+
         // Enable moveToFront function
         d3.selection.prototype.moveToFront = function() {
             return this.each(function(){
@@ -75,7 +90,6 @@
             return "translate(" + (x(d[1]) - width/2) + "," + (y(d[2]) - height/2) + ")";
         }
 
-        var data = JSON.parse('{{ graphdata_json }}');
 
         var margin = {top: 0, right: 0, bottom: 0, left: 0},
             width = 960,

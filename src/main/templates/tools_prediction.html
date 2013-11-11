@@ -56,7 +56,7 @@ function captureKeyCode(evt)
 $(function() {
 
     $('textarea#prediction').bind('input propertychange', function() {
-        $.getJSON($SCRIPT_ROOT + '/_prediction', {
+        $.getJSON($SCRIPT_ROOT + '/api/prediction', {
             text: $('textarea[name="prediction"]').val(),
             iso : '{{ iso }}'
         }, function(data) {
