@@ -1,4 +1,4 @@
-WEb API
+Web API
 =======
 
 
@@ -10,7 +10,7 @@ This function calculates and returns all the data for the semantic map of a word
 
 Pyhton Function::
 
-api_semantics()
+>>> api_semantics()
 
 URL::
 
@@ -41,7 +41,8 @@ Return
 The Python function has no return. The data is returned as Json in the HTTP response, somewhat like an html file.
 The returned data is a list (array) of 50 lists wich have 3 elements: the word, the x coordinates and the y coordinates.
 
-`Example<http://www.poio.eu/api/semantics?iso=bar&term=brezn>`_
+`Example here. 
+<http://www.poio.eu/api/semantics?iso=bar&term=brezn>`_
 
 
 
@@ -52,7 +53,7 @@ This funtion predicts and returns similar words to the one supplied.
 
 Python Funtion::
 
-api_prediction()
+>>> api_prediction()
 
 URL::
 
@@ -63,7 +64,7 @@ Parameters
 ----------
 
 * iso (string)
-* term (unicode string)
+* text (unicode string)
 
 The Python function takes no parameters, this is due to the fact that it is only called in Javascript.
 The parameters can only be passed using an HTTP request::
@@ -83,4 +84,6 @@ Return
 The Python function has no return. The data is returned as Json in the HTTP response, somewhat like an html file.
 The returned data is a list (array) of 6 predicted words.
 
-`Example<http://www.poio.eu/api/prediction?iso=bar&term=brez>`_
+`Example here. 
+<http://www.poio.eu/api/prediction?iso=bar&text=brez>`_
+
