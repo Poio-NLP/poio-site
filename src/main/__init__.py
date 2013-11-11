@@ -229,7 +229,3 @@ def prediction():
 #     pickle.dump(graphdata, outputfile)
 #     outputfile.close()
 #     return graphdata
-<<<<<<< HEAD
-=======
-
->>>>>>> cidles/master
