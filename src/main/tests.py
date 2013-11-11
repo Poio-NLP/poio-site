@@ -60,6 +60,9 @@ class MainTestCase(unittest.TestCase):
     def test_get_semantic_map(self):
         """Test get_semantic_map."""
         rv = self.app.get('/tools/semantics/bar/brezn')
+        assert 'Search Term' in rv.data
+
+        rv = self.app.get('/api/semantics?iso=bar&term=brezn')
         assert 'fettn' in rv.data
         assert 'brezn' in rv.data
 
@@ -68,7 +71,7 @@ class MainTestCase(unittest.TestCase):
         rv = self.app.get('/tools/prediction/bar')
         assert 'Text prediction' in rv.data
 
-        rv = self.app.get('/_prediction?iso=bar&text=De')
+        rv = self.app.get('/api/prediction?iso=bar&text=De')
         assert 'Des' in rv.data
 
 def suite():
