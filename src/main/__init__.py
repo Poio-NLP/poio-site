@@ -61,19 +61,15 @@ class DemoCallback(pressagio.callback.Callback):
 @app.route("/")
 @mobile_template('{mobile/}index.html')
 def index(template):
-    if request.MOBILE:
-        languages_iso = {}
-        for iso in languages_data:
-            languages_iso[languages_data[iso]['label']] = iso
-        languages = sorted(languages_iso.keys())
-        return render_template(template, languages = languages,
-            languages_iso = languages_iso)
-        
-    else:
-        languages_json = json.dumps(languages_data)
+    languages_iso = {}
+    for iso in languages_data:
+        languages_iso[languages_data[iso]['label']] = iso
+    languages = sorted(languages_iso.keys())
+    languages_json = json.dumps(languages_data)
 
-        return render_template(template,
-            languages_json = Markup(languages_json))
+    return render_template(template, languages = languages,
+        languages_iso = languages_iso,
+        languages_json = Markup(languages_json))
 
 @app.route("/about")
 @mobile_template('{mobile/}about.html')
@@ -87,18 +83,20 @@ def tools_prediction(template, iso):
 
 @app.route("/_prediction")
 def prediction():
+    predictions = []
     iso = request.args.get('iso', '', type=str)
-    string_buffer = request.args.get('text', '')
+    if iso != 'none':
+        string_buffer = request.args.get('text', '')
 
-    db_file = os.path.abspath(os.path.join(app.static_folder, 'prediction', "{0}.sqlite".format(iso)))
-    config_file = os.path.join(app.static_folder, 'prediction', "{0}.ini".format(iso))
-    config = configparser.ConfigParser()
-    config.read(config_file)
-    config.set("Database", "database", db_file)
+        db_file = os.path.abspath(os.path.join(app.static_folder, 'prediction', "{0}.sqlite".format(iso)))
+        config_file = os.path.join(app.static_folder, 'prediction', "{0}.ini".format(iso))
+        config = configparser.ConfigParser()
+        config.read(config_file)
+        config.set("Database", "database", db_file)
 
-    callback = DemoCallback(string_buffer)
-    prsgio = pressagio.Pressagio(callback, config)
-    predictions = prsgio.predict()
+        callback = DemoCallback(string_buffer)
+        prsgio = pressagio.Pressagio(callback, config)
+        predictions = prsgio.predict()
 
     return Response(json.dumps(predictions), mimetype='application/json')
 

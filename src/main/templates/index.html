@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='media/css/main.css') }}">
         <!--<link rel="stylesheet" href="css/onepage-scroll.css">-->
 
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="{{ url_for('static', filename='media/js/libs/modernizr-2.6.2.min.js') }}"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -24,10 +24,10 @@
         <div class="wrapper">
             <div class="nav">
                 <span class="menu_about"><a class="menu_about" href="#">About</a></span>
-                <span class="menu_tools"><a class="menu_tools" href="#">Tools</a></span>
+                <span class="menu_tools"><a class="menu_tools" href="#">Writetyper</a></span>
                 <span class="menu_map"><a class="menu_map" href="#">Map</a></span>
                 <span class="menu_team"><a class="menu_team" href="#">Team</a></span>
-                <span class="menu_documentation"><a class="menu_documentation" href="#">Documentation</a></span>
+                <span class="menu_documentation"><a class="menu_documentation" href="#">Code</a></span>
             </div>
             
             <div class="scroll">
@@ -39,10 +39,10 @@
                 <section class="start">
                     <img class="poio-logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" />
                     <p class="black">
-                        Poio is text prediction technology for under resourced languages.
+                        Poio is open source technology for language diversity.
                     </p>
                     <p class="green">
-                        Scroll down to get an overview of our tools and our team.
+                        <a class="scroll_down" href="#">Scroll down to get an overview of our tools and our team.</a>
                     </p>
                 </section>
                 <section class="about">
@@ -50,8 +50,8 @@
                     <p id="tools" class="black centered">
                         <a class="icon_prediction" href="#">Try the text predictor<a>,
                         <a class="icon_map" href="#">explore the map</a>,
-                        <a class="icon_documentation" href="#">read the documentation</a>,
-                        <a class="icon_testemonial" href="mailto:pbouda@cidles.eu">tell us what you think</a>.
+                        <a class="icon_documentation" href="#">fork the code</a>,
+                        <a class="icon_testemonial" href="http://eepurl.com/Hhmoj">subscribe to our newsletter</a>.
                     </p>
                     <p class="centered">
                         <a class="icon_prediction" href="#">
@@ -69,11 +69,34 @@
                     </p>
                 </section>
                 <section class="tools">
+                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
+                    <p class="green centered">
+                        <div class="parentSelect">
+                            <select id="language_chooser">
+                                <option value="none">Choose your language</option>
+                                {% for l in languages %}
+                                <option value="{{ languages_iso[l] }}">{{ l }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </p>
+                    <p class="black centered">
+                        <textarea id="prediction" placeholder="Click here and write your text..."></textarea>
+                    </p>
+                    <p id="predictor" class="black centered">
+                        <span><img src="{{ url_for('static', filename='media/img/f1_green.png') }}" /><span class="predicted-word" id="predict-0"></span></span>
+                        <span><img src="{{ url_for('static', filename='media/img/f2_green.png') }}" /><span class="predicted-word" id="predict-1"></span></span>
+                        <span><img src="{{ url_for('static', filename='media/img/f3_green.png') }}" /><span class="predicted-word" id="predict-2"></span></span>
+                        <span><img src="{{ url_for('static', filename='media/img/f4_green.png') }}" /><span class="predicted-word" id="predict-3"></span></span>
+                        <span><img src="{{ url_for('static', filename='media/img/f5_green.png') }}" /><span class="predicted-word" id="predict-4"></span></span>
+                        <span><img src="{{ url_for('static', filename='media/img/f6_green.png') }}" /><span class="predicted-word" id="predict-5"></span></span>
+                    </p>
                 </section>
                 <section class="map">
+                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
                 </section>
                 <section class="team">
-                    <a href="#" class="menu_start"><img class="poio-logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
+                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
                     <p class="black centered">
                         Poio was created at CIDLeS
                     </p>
@@ -107,13 +130,13 @@
                     </p>
                 </section>
                 <section class="documentation">
-                    <a href="#" class="menu_start"><img class="poio-logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
+                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
                     <p class="black centered">
-                        The documentation of Poio is hosted at readthedocs:
+                        Poio is free and open source. You can read, download or fork the code of Poio at Github:
                     </p>
                     <p class="green centered">
-                        <a href="http://poio-corpus.readthedocs.org/en/latest/">
-                            http://poio-corpus.readthedocs.org/en/latest/
+                        <a href="https://github.com/cidles/poio-corpus">
+                            https://github.com/cidles/poio-corpus
                         </a>
                     </p>
                 </section>
@@ -123,6 +146,9 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='media/js/libs/jquery-1.10.1.min.js') }}"><\/script>')</script>
+        <script type=text/javascript>
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        </script>
 
         <script src="{{ url_for('static', filename='media/js/plugins.js') }}"></script>
         <script src="{{ url_for('static', filename='media/js/main.js') }}"></script>

@@ -82,6 +82,11 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+
+/*
+ * Wrappers
+ */
+
 body, .onepage-wrapper, html {
   display: block;
   position: static;
@@ -114,6 +119,10 @@ body, .onepage-wrapper, html {
     margin-left: auto; 
     margin-right: auto;
 }
+
+/*
+ * Navigation
+ */
 
 .nav {
     position: fixed !important;
@@ -157,6 +166,10 @@ body, .onepage-wrapper, html {
     z-index: 9999;    
 }
 
+/*
+ * Section: Start
+ */
+
 section.start img.poio-logo {
     margin-bottom: 30px;
 }
@@ -170,12 +183,21 @@ section.start p {
     margin: 0;
 }
 
+section.start p a {
+    color: #2bb673;
+    text-decoration: none;
+}
+
+/*
+ * Section: About
+ */
+
 section.about img.poio-logo {
     margin-bottom: 50px;
 }
 
 section.about p {
-    font-size: 47px;
+    font-size: 48px;
 }
 
 section.about p a {
@@ -183,19 +205,83 @@ section.about p a {
     text-decoration: none;
 }
 
-/*section.tools p a:hover {
-    color: #2bb673;
-    text-decoration: none;
-}*/
-
 section.about p#tools {
     margin-bottom: 75px;
+}
+
+/*
+ * Section: Tools
+ */
+
+section.tools img.poio-logo {
+    margin-bottom: 50px;
+}
+
+section.tools p {
+    font-size: 47px;
+}
+
+section.tools div.parentSelect {
+    margin-left: auto;
+    margin-right: auto;
+    width: 520px;
+    padding-left: 10px;
+    overflow: hidden;
+}
+
+section.tools select {
+    width: 540px;
+    font-family: MuseoSans100;
+    font-size: 47px;
+    color: #2bb673;
+    padding: 0px 0px 0px 20px;
+    border: 0 none;
+    background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat left center;
+}
+
+section.tools textarea {
+    font-family: MuseoSans100;
+    background-color: #f2f2f3;
+    width: 100%;
+    text-align: center;
+    border: none;
+}
+
+section.tools select option {
+    color: #000;
+}
+
+p#predictor {
+    white-space: nowrap;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p#predictor span.predicted-word {
+    font-size: 19px;
+    margin-left: 15px;
+    margin-right: 25px;
+    position: relative;
+    top: -6px;
+}
+
+/*
+ * Section: Map
+ */
+
+section.map img.poio_logo {
+    margin-bottom: 50px;
 }
 
 section.team p {
     font-size: 42px;
     margin: 0;
 }
+
+/*
+ * Section: Team
+ */
 
 section.team p.team_member {
     width: 290px;
@@ -221,6 +307,10 @@ img.team_name {
     margin-top: 8px;
     margin-bottom: 16px;
 }
+
+/*
+ * Section: Documentation
+ */
 
 section.documentation p {
     font-size: 38px;

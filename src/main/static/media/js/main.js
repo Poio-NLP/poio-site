@@ -126,3 +126,41 @@ $( "a.icon_map" ).click(function() {
 $( "a.icon_documentation" ).click(function() {
   $(".main").moveTo(6);
 });
+
+////////////////////////////////////////////// icon_prediction
+
+$('textarea#prediction').keydown(function(evt) {
+  var charCode = (evt.which) ? evt.which : event.keyCode
+  if (( charCode == 112 ) ||
+      ( charCode == 113 ) ||
+      ( charCode == 114 ) ||
+      ( charCode == 115 ) ||
+      ( charCode == 116 ) ||
+      ( charCode == 117 ) ) {
+    i = charCode - 112;
+    text = $("#predict-" + i).text();
+    prevText = $('textarea#prediction').val();
+    newText = prevText.substr(0, prevText.lastIndexOf(" "));
+    newText += " ";
+    newText += text;
+    newText += " ";
+    $('textarea#prediction').val(newText);
+    return false;
+  }
+    else return true;
+});
+
+$('textarea#prediction').bind('input propertychange', function() {
+  $.getJSON($SCRIPT_ROOT + '/_prediction', {
+    text: $('textarea#prediction').val(),
+    iso : $('select#language_chooser').val()
+  }, function(data) {
+    var length = data.length, element = null;
+    for (var i = 0; i < length; i++) {
+      element = data[i];
+      $("#predict-" + i).text(element)
+    }
+  });
+  return false;
+});
+
