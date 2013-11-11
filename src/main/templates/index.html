@@ -1,233 +1,130 @@
-{% extends "base.j2" %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
 
-{% block main %}
-<div style="width:1000px; height:600px;">
-</div>
-<div id="map" style="position:absolute; top:50px; left:0; width:1000px; height:600px;">
-</div>
-<div id="teaser" style="position:absolute; top:50px; left: 20px; width:360px;">
+        <link rel="stylesheet" href="{{ url_for('static', filename='media/css/normalize.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='media/css/main.css') }}">
+        <!--<link rel="stylesheet" href="css/onepage-scroll.css">-->
 
-	<h1>Poio</h1>
-	<h3>Technologies for Language Diversity</h3>
-	<p style="text-align:left;">
-	  Poio is a free and open source predictive text and transliteration system for lesser-used languages. We support text input for languages like Bavarian, Chechen and Sorbian on mobile phones and desktop computers. <a href="{{ url_for('about') }}">Read more about the Poio project...</a>
-	</p>
-</div> <!-- teaser -->
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
 
-<div id="mailchimp" style="position:absolute; top:390px; left: 20px;">
-	<!-- Begin MailChimp Signup Form -->
-	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
-	<style type="text/css">
-	  #mc_embed_signup{clear:left; font:14px; margin-left:-10px; }
-	  /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
-	     We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-	</style>
-	<div id="mc_embed_signup">
-	<form action="http://brickband.us5.list-manage.com/subscribe/post?u=0dbbf1894965f1d6e74b8728a&amp;id=9887fcd7f4" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-	  <label for="mce-EMAIL">Subscribe to our monthly newsletter</label>
-	  <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
-	  <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-	</form>
-	</div>
-	<!--End mc_embed_signup-->
+        <div class="wrapper">
+            <div class="nav">
+                <span class="menu_about"><a class="menu_about" href="#">About</a></span>
+                <span class="menu_tools"><a class="menu_tools" href="#">Tools</a></span>
+                <span class="menu_map"><a class="menu_map" href="#">Map</a></span>
+                <span class="menu_team"><a class="menu_team" href="#">Team</a></span>
+                <span class="menu_documentation"><a class="menu_documentation" href="#">Documentation</a></span>
+            </div>
+            
+            <div class="scroll">
+                <a class="scroll_down" href="#"><img src="{{ url_for('static', filename='media/img/scroll_down_green.png') }}" /></a>
+                <a class="scroll_up" href="#" style="display:none;"><img src="{{ url_for('static', filename='media/img/scroll_up_green.png') }}" /></a>
+            </div>
 
-</div> <!-- mailchimp -->
-{% endblock %}
-
-{% block scripts %}
-    <script src="{{ url_for('static', filename='media/js/libs/d3.v3.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='media/js/libs/queue.v1.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='media/js/libs/topojson.v1.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='media/js/libs/kinetic-v4.5.4.min.js') }}"></script>
-
-	<script type="text/javascript">
-
-    //////////////////////////////////////////////////////////////// Globals
-
-    var land;
-    var borders;
-    var tooltipLayer;
-    var dragStarted = false;
-    var lastMouseX = -1;
-    var lastMouseY = -1;
-    var lastR = 0;
-    var worldData;
-    var projection;
-    var path;
-    var c;
-
-    //////////////////////////////////////////////////////////////// Functions
-
-    function drawLand() {
-        c.beginPath();
-        c.fillStyle = "#acf";
-        path(land);
-        c.fill();
-          
-        c.beginPath();
-        c.strokeStyle = "#fff"; 
-        c.lineWidth = .5;
-        path(borders);
-        c.stroke();
-    }
-
-    function drawLanguages() {
-       var languages = JSON.parse('{{ languages_json }}');
-       Object.keys(languages).forEach(function (key) {
-            var value = languages[key]
-            var centerX = projection([value.geo.lon, value.geo.lat])[0];
-            var centerY = projection([value.geo.lon, value.geo.lat])[1];
-
-            var circle = new Kinetic.Circle({
-               x: centerX,
-               y: centerY,
-               fill: "red",
-               stroke: "#330000",
-               strokeWidth: 2,
-               radius: 5
-            });
-
-            circle.on("mousemove", function(){
-                var mousePos = stage.getMousePosition();
-                tooltip.setPosition(mousePos.x + 5, mousePos.y - 20);
-                tooltip.setText(value.label);
-                tooltip.show();
-                tooltipLayer.draw();
-                document.body.style.cursor = "pointer";
-            });
-
-            circle.on("mouseout", function(){
-                tooltip.hide();
-                tooltipLayer.draw();
-                document.body.style.cursor = "default";
-            });
-
-
-            circle.on("click", function(){
-                window.location = '/tools/prediction/' + key
-            });
-
-            shapesLayer.add(circle);
-
-        });
-
-        var tooltip = new Kinetic.Text({
-            text: "",
-            fontFamily: "Calibri",
-            fontSize: 12,
-            padding: 5,
-            textFill: "white",
-            fill: "black",
-            alpha: 0.75,
-            visible: false
-        });
-
-        tooltipLayer.add(tooltip);
-        shapesLayer.draw();
-    }
-
-    function makeDraggable() {
-        //worldLayer.setDraggable(true);
-        stage.getContainer().addEventListener('mousedown', function(e) {
-            lastMouseX = e.screenX;
-            lastMouseY = e.screenY;
-            dragStarted = true;
-            lastR = projection.rotate();
-        });
-        stage.getContainer().addEventListener('mouseup', function(e) {
-            lastMouseX = -1;
-            lastMouseY = -1;
-            dragStarted = false;
-        });
-        stage.getContainer().addEventListener('mouseout', function(e) {
-            lastMouseX = -1;
-            lastMouseY = -1;
-            dragStarted = false;
-        });
-        stage.getContainer().addEventListener('mousemove', function(e) {
-            if (dragStarted) {
-                var diffX = lastR[0] + ( (e.screenX - lastMouseX) / 10);
-                var diffY = lastR[1] + ( (lastMouseY - e.screenY) / 10);
+            <div class="main">
+                <section class="start">
+                    <img class="poio-logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" />
+                    <p class="black">
+                        Poio is text prediction technology for under resourced languages.
+                    </p>
+                    <p class="green">
+                        Scroll down to get an overview of our tools and our team.
+                    </p>
+                </section>
+                <section class="about">
+                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
+                    <p id="tools" class="black centered">
+                        <a class="icon_prediction" href="#">Try the text predictor<a>,
+                        <a class="icon_map" href="#">explore the map</a>,
+                        <a class="icon_documentation" href="#">read the documentation</a>,
+                        <a class="icon_testemonial" href="mailto:pbouda@cidles.eu">tell us what you think</a>.
+                    </p>
+                    <p class="centered">
+                        <a class="icon_prediction" href="#">
+                            <img id="icon_prediction" src="{{ url_for('static', filename='media/img/icon_prediction.png') }}" style="margin-right:130px;" />
+                        </a>
+                        <a  class="icon_map" href="#">
+                            <img id="icon_map" src="{{ url_for('static', filename='media/img/icon_map.png') }}" style="margin-right:130px;" />
+                        </a>
+                        <a  class="icon_documentation" href="#">
+                            <img id="icon_documentation" src="{{ url_for('static', filename='media/img/icon_documentation.png') }}" style="margin-right:130px;" />
+                        </a>
+                        <a  class="icon_testemonial" href="#">
+                            <img id="icon_testemonial" src="{{ url_for('static', filename='media/img/icon_testemonial.png') }}"/>
+                        </a>
+                    </p>
+                </section>
+                <section class="tools">
+                </section>
+                <section class="map">
+                </section>
+                <section class="team">
+                    <a href="#" class="menu_start"><img class="poio-logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
+                    <p class="black centered">
+                        Poio was created at CIDLeS
+                    </p>
+                    <p class="green centered">
+                        <a href="http://www.cidles.eu/about/team/">by Vera, Peter, Rita and their team</a>
+                    </p>
+                    <p id="team_members">
+                        <p class="team_member" style="margin-right: 30px;">
+                            <img class="team_photo" src="{{ url_for('static', filename='media/img/vera_photo.png') }}" /><br />
+                            <img class="team_name" src="{{ url_for('static', filename='media/img/vera_text_green.png') }}" /><br />
+                            Vera Ferreira is the president of CIDLeS and head 
+                            of its Language Documentation and Language Typology group.
+                        </p>
+                        <p class="team_member" style="margin-right: 30px;">
+                            <img class="team_photo" src="{{ url_for('static', filename='media/img/peter_photo.png') }}" /><br />
+                            <img class="team_name" src="{{ url_for('static', filename='media/img/peter_text_green.png') }}" /><br />
+                            Peter is the head of the CIDLeS Media Lab. He is responsible for
+                            the development of Poio and its text prediction.
+                        </p>
+                        <p class="team_member">
+                            <img class="team_photo" src="{{ url_for('static', filename='media/img/rita_photo.png') }}" /><br />
+                            <img class="team_name" src="{{ url_for('static', filename='media/img/rita_text_green.png') }}" /><br />
+                            Rita is a research assistant at CIDLES and the responsible
+                            for its working group on Language Revitalization.
+                        </p>
+                        <br style="clear:both;" />
+                        <br />
+                    </p>
+                    <p class="green centered">
+                        <a href="http://www.cidles.eu/">Visit CIDLeS</a>
+                    </p>
+                </section>
+                <section class="documentation">
+                    <a href="#" class="menu_start"><img class="poio-logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
+                    <p class="black centered">
+                        The documentation of Poio is hosted at readthedocs:
+                    </p>
+                    <p class="green centered">
+                        <a href="http://poio-corpus.readthedocs.org/en/latest/">
+                            http://poio-corpus.readthedocs.org/en/latest/
+                        </a>
+                    </p>
+                </section>
+            </div><!-- [END] .main -->
+        </div><!-- [END] .wrapper -->
 
 
-                projection.rotate([diffX, diffY, 0]);
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='media/js/libs/jquery-1.10.1.min.js') }}"><\/script>')</script>
 
-                c.clearRect(0, 0, width, height);
-                tooltipLayer.removeChildren();
-                shapesLayer.removeChildren();
-                drawLand();
-                drawLanguages();
-            }
-        });
-    }
-
-    function transitionEnded() {
-        drawLanguages();
-        makeDraggable();
-    }
-
-    //////////////////////////////////////////////////////////////// Main
-
-	var width = 1000,
-	    height = 600;
-
-	/*var canvas = d3.select("#map").append("canvas")
-	    .attr("width", width)
-	    .attr("height", height);*/
-    var stage = new Kinetic.Stage({
-      container: 'map',
-      width: width,
-      height: height
-    });
-    worldLayer = new Kinetic.Layer();
-    shapesLayer = new Kinetic.Layer();
-    tooltipLayer = new Kinetic.Layer();
-    stage.add(worldLayer);
-    stage.add(shapesLayer);
-    stage.add(tooltipLayer);
-
-	c = worldLayer.getContext();
-
-	projection = d3.geo.orthographic()
-	    .scale(250)
-	    .translate([700,250])
-	    .clipAngle(90)
-	    .clipExtent([[0,0],[width,height]]);
-
-	path = d3.geo.path()
-	    .projection(projection)
-	    .context(c);
-	    
-	queue()
-	    .defer(d3.json, '/static/media/data/world-110m.json')
-	    .await(ready);
-
-	function ready(error, world) {
-        worldData = world;
-        land = topojson.feature(worldData, worldData.objects.land);
-	    borders = topojson.mesh(worldData, worldData.objects.countries, function(a, b) { return a !== b; });
-
-	    c.clearRect(0, 0, width, height);
-
-        drawLand();
-
-        (function transition() {
-            d3.transition()
-            .delay(1000)
-            .duration(2500)
-            .tween("rotate", function() {
-                var r = d3.interpolate(projection.rotate(), [-25, -57]);
-                var s = d3.interpolate(projection.scale(), 900);
-                return function(t) {
-                    projection.rotate(r(t));
-                    projection.scale(s(t));
-                    c.clearRect(0, 0, width, height);
-                    drawLand();
-                };
-            })
-            .each("end", transitionEnded)
-        })();
-    }
-
-	</script>
-{% endblock %}
+        <script src="{{ url_for('static', filename='media/js/plugins.js') }}"></script>
+        <script src="{{ url_for('static', filename='media/js/main.js') }}"></script>
+    </body>
+</html>
