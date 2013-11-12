@@ -22,6 +22,16 @@
     src: url("MuseoSans_300Web.woff") format("woff");
 }
 
+@font-face {
+    font-family: MuseoSans500;
+    src: url("MuseoSans_500Web.eot");
+}
+
+@font-face {
+    font-family: MuseoSans500;
+    src: url("MuseoSans_500Web.woff") format("woff");
+}
+
 html,
 button,
 input,
@@ -149,9 +159,8 @@ body, .onepage-wrapper, html {
 }
 
 .nav span {
-    font-family: MuseoSans300, sans-serif;
+    font-family: MuseoSans500, sans-serif;
     font-size: 14px;
-    font-weight: 300;
     color: #2bb673;
     text-transform:uppercase;
 }

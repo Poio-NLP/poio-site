@@ -55,7 +55,7 @@ def get_prediction():
         config_file = os.path.join(app.static_folder, 'prediction', "{0}.ini".format(iso))
         config = configparser.ConfigParser()
         config.read(config_file)
-        if iso == 'bar':
+        if config.get("Database", "class") == 'PostgresDatabaseConnector':
             config.set("Database", "database", iso)
         else:
             config.set("Database", "database", db_file)
