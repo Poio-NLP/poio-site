@@ -144,13 +144,21 @@ $('textarea#prediction').keydown(function(evt) {
     text = $("#predict-" + i).text();
     prevText = $('textarea#prediction').val();
     newText = prevText.substr(0, prevText.lastIndexOf(" "));
-    newText += " ";
+    if (prevText.lastIndexOf(" ") != -1) { newText += " ";};
     newText += text;
     newText += " ";
     $('textarea#prediction').val(newText);
     return false;
   }
-    else return true;
+  else if ( (charCode == 190) ||
+            (charCode == 188) ||
+            (charCode == 186) ) {
+    prevText = $('textarea#prediction').val();
+    newText = prevText.substr(0, prevText.lastIndexOf(" "));
+    $('textarea#prediction').val(newText);
+    return true;
+  }
+  else return true;
 });
 
 $('textarea#prediction').bind('input propertychange', function() {
