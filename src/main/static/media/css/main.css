@@ -82,6 +82,14 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+#backline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10px;
+    width: 100%;
+    background: #f2f2f3 url('/static/media/img/backline.png') repeat-x left top;
+}
 
 /*
  * Wrappers
@@ -102,7 +110,7 @@ body, .onepage-wrapper, html {
   position: relative;
   padding: 0;
   -webkit-transform-style: preserve-3d;
-  margin-top: 37px;
+  margin-top: 51px;
 }
 
 .onepage-wrapper .section {
@@ -127,14 +135,17 @@ body, .onepage-wrapper, html {
 .nav {
     position: fixed !important;
     overflow: visible;
-    margin-left: 430px;
-    margin-top: 50px;
+    margin-left: 411px;
+    margin-top: 61px;
     z-index: 9999;    
 }
 
 .nav span {
-    margin-left: 20px;
-    padding: 13px;
+    margin-left: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .nav span {
@@ -171,11 +182,11 @@ body, .onepage-wrapper, html {
  */
 
 section.start img.poio-logo {
-    margin-bottom: 30px;
+    margin-bottom: 29px;
 }
 
 section.start {
-    margin-top: 103px;
+    margin-top: 105px;
 }
 
 section.start p {
@@ -193,7 +204,7 @@ section.start p a {
  */
 
 section.about img.poio-logo {
-    margin-bottom: 50px;
+    margin-bottom: 75px;
 }
 
 section.about p {
@@ -206,7 +217,7 @@ section.about p a {
 }
 
 section.about p#tools {
-    margin-bottom: 75px;
+    margin-bottom: 57px;
 }
 
 /*
@@ -214,7 +225,7 @@ section.about p#tools {
  */
 
 section.tools img.poio-logo {
-    margin-bottom: 50px;
+    margin-bottom: 75px;
 }
 
 section.tools p {
@@ -271,17 +282,23 @@ p#predictor span.predicted-word {
  */
 
 section.map img.poio_logo {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+
+/*
+ * Section: Team
+ */
+
+
+section.team img.poio_logo {
+    margin-bottom: 10px;
 }
 
 section.team p {
     font-size: 42px;
     margin: 0;
 }
-
-/*
- * Section: Team
- */
 
 section.team p.team_member {
     width: 290px;
@@ -290,8 +307,7 @@ section.team p.team_member {
 }
 
 section.team p#team_members {
-    margin-top: 30px;
-    margin-bottom: 50px;
+    margin-top: 23px;
 }
 
 section.team p a {
