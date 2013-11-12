@@ -297,7 +297,7 @@ function drawMap() {
   //////////////////////////////////////////////////////////////// Main
 
   var width = 930,
-  height = 600;
+  height = 500;
 
   var stage = new Kinetic.Stage({
     container: 'map',
