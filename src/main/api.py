@@ -47,17 +47,22 @@ def api_prediction():
 
 def get_prediction():
     iso = request.args.get('iso', '', type=str)
-    string_buffer = request.args.get('text', '')
+    predictions = []
+    if iso != 'none':
+        string_buffer = request.args.get('text', '')
 
-    db_file = os.path.abspath(os.path.join(app.static_folder, 'prediction', "{0}.sqlite".format(iso)))
-    config_file = os.path.join(app.static_folder, 'prediction', "{0}.ini".format(iso))
-    config = configparser.ConfigParser()
-    config.read(config_file)
-    config.set("Database", "database", db_file)
+        db_file = os.path.abspath(os.path.join(app.static_folder, 'prediction', "{0}.sqlite".format(iso)))
+        config_file = os.path.join(app.static_folder, 'prediction', "{0}.ini".format(iso))
+        config = configparser.ConfigParser()
+        config.read(config_file)
+        if iso == 'bar':
+            config.set("Database", "database", iso)
+        else:
+            config.set("Database", "database", db_file)
 
-    callback = DemoCallback(string_buffer)
-    prsgio = pressagio.Pressagio(callback, config)
-    predictions = prsgio.predict()
+        callback = DemoCallback(string_buffer)
+        prsgio = pressagio.Pressagio(callback, config)
+        predictions = prsgio.predict()
 
     return predictions
 
