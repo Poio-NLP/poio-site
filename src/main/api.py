@@ -17,7 +17,7 @@ import scipy.linalg
 import pressagio.callback
 import pressagio
 
-# Import Flask app:
+# Import Flask app
 from main import app
 
 class DemoCallback(pressagio.callback.Callback):

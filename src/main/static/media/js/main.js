@@ -154,7 +154,7 @@ $('textarea#prediction').keydown(function(evt) {
 });
 
 $('textarea#prediction').bind('input propertychange', function() {
-  $.getJSON($SCRIPT_ROOT + '/_prediction', {
+  $.getJSON($SCRIPT_ROOT + '/api/prediction', {
     text: $('textarea#prediction').val(),
     iso : $('select#language_chooser').val()
   }, function(data) {
