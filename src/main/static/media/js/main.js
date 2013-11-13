@@ -144,28 +144,87 @@ $('textarea#prediction').keydown(function(evt) {
     text = $("#predict-" + i).text();
     prevText = $('textarea#prediction').val();
     newText = prevText.substr(0, prevText.lastIndexOf(" "));
-    newText += " ";
+    if (prevText.lastIndexOf(" ") != -1) { newText += " ";}; // Don't add a space in the begining
     newText += text;
     newText += " ";
     $('textarea#prediction').val(newText);
     return false;
   }
-    else return true;
+  else return true;
 });
 
 $('textarea#prediction').bind('input propertychange', function() {
   $.getJSON($SCRIPT_ROOT + '/api/prediction', {
     text: $('textarea#prediction').val(),
     iso : $('select#language_chooser').val()
-  }, function(data) {
-    var length = data.length, element = null;
-    for (var i = 0; i < length; i++) {
-      element = data[i];
-      $("#predict-" + i).text(element)
-    }
+    }, function(data) {
+      var length = data.length, element = null;
+      for (var i = 0; i < length; i++) {
+        element = data[i];
+        $("#predict-" + i).text(element)
+      }
   });
+
+  ////////////// Punctuation Correction
+  cursorPos = getCaretPosition(document.getElementById('prediction')); // Doesn't work with jQuery
+  lastChar = $('textarea#prediction').val().charAt(cursorPos - 1);
+  textLenght = $('textarea#prediction').val().length;
+
+  if (cursorPos == 1) { // Capitalize first letter
+    newChar = $('textarea#prediction').val().charAt(0).toUpperCase();
+    newText = newChar + $('textarea#prediction').val().substr(1, textLenght - 1);
+    $('textarea#prediction').val(newText);
+    setCaretPosition(document.getElementById('prediction'), cursorPos);
+  }
+
+  if ( ((lastChar == ".") || // Remove space before punctuation
+        (lastChar == ",") ||
+        (lastChar == ";") ||
+        (lastChar == ":") ||
+        (lastChar == "!") ||
+        (lastChar == "?")) &&
+        ($('textarea#prediction').val().charAt(cursorPos - 2) == " ") ) {
+    prevText = $('textarea#prediction').val();
+    newText = prevText.substr(0, cursorPos - 2) + lastChar + prevText.substr(cursorPos, textLenght - 1);
+    $('textarea#prediction').val(newText);
+    setCaretPosition(document.getElementById('prediction'), cursorPos - 1);
+  };
+
   return false;
 });
+
+///////////////////////////////////////////////// Helpers
+
+function getCaretPosition (ctrl) {
+  var CaretPos = 0;
+  // IE Support
+  if (document.selection) {
+    ctrl.focus ();
+    var Sel = document.selection.createRange ();
+    Sel.moveStart ('character', -ctrl.value.length);
+    CaretPos = Sel.text.length;
+  }
+  // Firefox and most others support 
+  else if (ctrl.selectionStart || ctrl.selectionStart == '0')
+    CaretPos = ctrl.selectionStart;
+  return (CaretPos);
+}
+
+function setCaretPosition(ctrl, pos){
+  if(ctrl.setSelectionRange)
+  {
+    ctrl.focus();
+    ctrl.setSelectionRange(pos,pos);
+  }
+  else if (ctrl.createTextRange) {
+    var range = ctrl.createTextRange();
+    range.collapse(true);
+    range.moveEnd('character', pos);
+    range.moveStart('character', pos);
+    range.select();
+  }
+}
+
 
 ///////////////////////////////////////////////// Map
 
