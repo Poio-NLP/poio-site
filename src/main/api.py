@@ -64,6 +64,7 @@ def get_prediction():
         callback = DemoCallback(string_buffer)
         prsgio = pressagio.Pressagio(callback, config)
         predictions = prsgio.predict()
+        del(prsgio)
 
     return predictions
 
