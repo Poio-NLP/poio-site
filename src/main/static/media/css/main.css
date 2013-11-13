@@ -93,12 +93,25 @@ textarea {
    ========================================================================== */
 
 #backline {
-    position: absolute;
+    position: fixed !important;
     top: 0;
     left: 0;
     height: 10px;
     width: 100%;
     background: #f2f2f3 url('/static/media/img/backline.png') repeat-x left top;
+    z-index: 9999; 
+}
+
+#social {
+    position: fixed !important;
+    overflow: visible;
+    margin-left: 809px;
+    margin-top: 658px;
+    z-index: 9999;    
+}
+
+img.social {
+    margin-right: 13px;
 }
 
 /*

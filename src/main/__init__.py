@@ -11,13 +11,16 @@ import os
 import glob
 import json
 import pickle
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
 
 from flask import Flask, render_template, Markup
 from flask.ext.mobility import Mobility
 from flask.ext.mobility.decorators import mobile_template
 
-import pressagio.callback
-import pressagio
+import psycopg2
 
 from werkzeug.contrib.cache import SimpleCache
 cache = SimpleCache()
@@ -25,26 +28,38 @@ cache = SimpleCache()
 app = Flask(__name__)
 Mobility(app)
 
-# Import flask modules after defining app
-import main.api
-
 # Creating global language data
-languages_data = {}
+languages_data = dict()
 languages_data_file = os.path.join(app.static_folder, 'langinfo',
     'languages_data.pickle')
 with open(languages_data_file, "rb") as f:
     languages_data = pickle.load(f)
 
+# Creating global database connections
+dbconnections = dict()
+languages_iso = dict()
+for iso in languages_data:
+    languages_iso[languages_data[iso]['label']] = iso
+    config_file = os.path.join(app.static_folder, 'prediction', "{0}.ini".format(iso))
+    config = configparser.ConfigParser()
+    config.read(config_file)
+    if config.get("Database", "class") == 'PostgresDatabaseConnector':
+        dbconnections[iso] = psycopg2.connect(
+            host=config.get("Database", "host"),
+            database=iso,
+            user=config.get("Database", "user"),
+            password=config.get("Database", "password"))
+
+languages = sorted(languages_iso.keys())
+
+# Import flask modules after defining app
+import main.api
 
 ###################################### Pages
 
 @app.route("/")
 @mobile_template('{mobile/}index.html')
 def index(template):
-    languages_iso = {}
-    for iso in languages_data:
-        languages_iso[languages_data[iso]['label']] = iso
-    languages = sorted(languages_iso.keys())
     languages_json = json.dumps(languages_data)
 
     return render_template(template, languages = languages,
