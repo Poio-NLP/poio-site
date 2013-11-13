@@ -42,7 +42,7 @@ textarea {
 
 body {
     font-size: 1em;
-    line-height: 1.4;
+    line-height: 1.3;
     background-color: #f2f2f3;
     font-family: MuseoSans100;
 }
@@ -146,7 +146,7 @@ body, .onepage-wrapper, html {
     position: fixed !important;
     overflow: visible;
     margin-left: 411px;
-    margin-top: 61px;
+    margin-top: 62px;
     z-index: 9999;    
 }
 
@@ -191,7 +191,7 @@ body, .onepage-wrapper, html {
  */
 
 section.start img.poio-logo {
-    margin-bottom: 29px;
+    margin-bottom: 32px;
 }
 
 section.start {
@@ -212,8 +212,8 @@ section.start p a {
  * Section: About
  */
 
-section.about img.poio-logo {
-    margin-bottom: 75px;
+section.about img.poio_logo {
+    margin-bottom: 50px;
 }
 
 section.about p {
@@ -227,6 +227,7 @@ section.about p a {
 
 section.about p#tools {
     margin-bottom: 57px;
+    margin-top: 0;
 }
 
 /*
@@ -301,7 +302,7 @@ section.map img.poio_logo {
 
 
 section.team img.poio_logo {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 section.team p {
@@ -348,7 +349,7 @@ section.documentation p a {
 }
 
 section.documentation img.poio_logo {
-    margin-bottom: 50px;
+    margin-bottom: 52px;
 }
 
 p.green {
