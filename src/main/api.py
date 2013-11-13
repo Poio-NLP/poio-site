@@ -19,6 +19,7 @@ import pressagio
 
 # Import Flask app
 from main import app
+from main import dbconnections
 
 class DemoCallback(pressagio.callback.Callback):
     def __init__(self, buffer):
@@ -58,13 +59,14 @@ def get_prediction():
         dbconnection = None
         if config.get("Database", "class") == 'PostgresDatabaseConnector':
             config.set("Database", "database", iso)
+            if iso in dbconnections:
+                dbconnection = dbconnections[iso]
         else:
             config.set("Database", "database", db_file)
 
         callback = DemoCallback(string_buffer)
-        prsgio = pressagio.Pressagio(callback, config)
+        prsgio = pressagio.Pressagio(callback, config, dbconnection)
         predictions = prsgio.predict()
-        del(prsgio)
 
     return predictions
 
