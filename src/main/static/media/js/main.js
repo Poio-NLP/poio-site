@@ -165,16 +165,30 @@ $('textarea#prediction').bind('input propertychange', function() {
       }
   });
 
-  ////////////// Punctuation Correction
+  ////////////// Text input post-processing
   cursorPos = getCaretPosition(document.getElementById('prediction')); // Doesn't work with jQuery
   lastChar = $('textarea#prediction').val().charAt(cursorPos - 1);
+  charAt2 = $('textarea#prediction').val().charAt(cursorPos - 2);
   textLenght = $('textarea#prediction').val().length;
 
-  if (cursorPos == 1) { // Capitalize first letter
+  if (cursorPos == 1) { // Capitalize first letter of the text box
     newChar = $('textarea#prediction').val().charAt(0).toUpperCase();
     newText = newChar + $('textarea#prediction').val().substr(1, textLenght - 1);
     $('textarea#prediction').val(newText);
     setCaretPosition(document.getElementById('prediction'), cursorPos);
+  }
+
+  if (charAt2 == " ") { // Capitalize first letter after punctuation
+    charAt3 = $('textarea#prediction').val().charAt(cursorPos - 3);
+    if (  (charAt3 == "." ) ||
+          (charAt3 == "!" ) ||
+          (charAt3 == "?" ) ) {
+      prevText = $('textarea#prediction').val();
+      newChar = lastChar.toUpperCase();
+      newText = prevText.substr(0, cursorPos - 1) + newChar + prevText.substr(cursorPos, textLenght - 1);
+      $('textarea#prediction').val(newText);
+      setCaretPosition(document.getElementById('prediction'), cursorPos);
+    }
   }
 
   if ( ((lastChar == ".") || // Remove space before punctuation
@@ -183,7 +197,7 @@ $('textarea#prediction').bind('input propertychange', function() {
         (lastChar == ":") ||
         (lastChar == "!") ||
         (lastChar == "?")) &&
-        ($('textarea#prediction').val().charAt(cursorPos - 2) == " ") ) {
+        (charAt2 == " ")  ) {
     prevText = $('textarea#prediction').val();
     newText = prevText.substr(0, cursorPos - 2) + lastChar + prevText.substr(cursorPos, textLenght - 1);
     $('textarea#prediction').val(newText);
