@@ -36,19 +36,19 @@ with open(languages_data_file, "rb") as f:
     languages_data = pickle.load(f)
 
 # Creating global database connections
-dbconnections = dict()
+#dbconnections = dict()
 languages_iso = dict()
 for iso in languages_data:
     languages_iso[languages_data[iso]['label']] = iso
-    config_file = os.path.join(app.static_folder, 'prediction', "{0}.ini".format(iso))
-    config = configparser.ConfigParser()
-    config.read(config_file)
-    if config.get("Database", "class") == 'PostgresDatabaseConnector':
-        dbconnections[iso] = psycopg2.connect(
-            host=config.get("Database", "host"),
-            database=iso,
-            user=config.get("Database", "user"),
-            password=config.get("Database", "password"))
+    # config_file = os.path.join(app.static_folder, 'prediction', "{0}.ini".format(iso))
+    # config = configparser.ConfigParser()
+    # config.read(config_file)
+    # if config.get("Database", "class") == 'PostgresDatabaseConnector':
+    #     dbconnections[iso] = psycopg2.connect(
+    #         host=config.get("Database", "host"),
+    #         database=iso,
+    #         user=config.get("Database", "user"),
+    #         password=config.get("Database", "password"))
 
 languages = sorted(languages_iso.keys())
 
