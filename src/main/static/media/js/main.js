@@ -41,6 +41,17 @@ $( "a.icon_map" ).hover(
   }
 );
 
+$( ".nav span" ).click(
+  function () {
+    $( "span.menu_about" ).toggleClass('selected', false);
+    $( "span.menu_tools" ).toggleClass('selected', false);
+    $( "span.menu_team" ).toggleClass('selected', false);
+    $( "span.menu_map" ).toggleClass('selected', false);
+    $( "span.menu_documentation" ).toggleClass('selected', false);
+    $(this).toggleClass('selected', true);
+  }
+);
+
 /////////////////////////////////////////// Scrolling
 
 $(".main").onepage_scroll({

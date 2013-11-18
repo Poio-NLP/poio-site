@@ -11,17 +11,7 @@
     font-family: MuseoSans100;
     src: url("MuseoSans_100Web.woff") format("woff");
 }
-
-@font-face {
-    font-family: MuseoSans300;
-    src: url("MuseoSans_300Web.eot");
-}
-
-@font-face {
-    font-family: MuseoSans300;
-    src: url("MuseoSans_300Web.woff") format("woff");
-}
-
+ß
 @font-face {
     font-family: MuseoSans500;
     src: url("MuseoSans_500Web.eot");
@@ -44,7 +34,7 @@ body {
     font-size: 1em;
     line-height: 1.3;
     background-color: #f2f2f3;
-    font-family: MuseoSans100;
+    font-family: MuseoSans100 sans-serif;
 }
 
 ::-moz-selection {
@@ -178,6 +168,10 @@ body, .onepage-wrapper, html {
     text-transform:uppercase;
 }
 
+.nav span:hover {
+    background-color: black;    
+}
+
 .nav span.selected {
     background-color: black;
 }
@@ -265,7 +259,7 @@ section.tools div.parentSelect {
 
 section.tools select {
     width: 540px;
-    font-family: MuseoSans100;
+    font-family: MuseoSans100 sans-serif;
     font-size: 47px;
     color: #2bb673;
     padding: 0px 0px 0px 20px;
@@ -274,7 +268,7 @@ section.tools select {
 }
 
 section.tools textarea {
-    font-family: MuseoSans100;
+    font-family: MuseoSans100 sans-serif;
     background-color: #f2f2f3;
     width: 100%;
     text-align: center;
