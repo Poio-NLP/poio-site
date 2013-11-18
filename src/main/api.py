@@ -43,6 +43,10 @@ def api_semantics():
 def api_prediction():
     return Response(json.dumps(get_prediction()), mimetype='application/json')
 
+@app.route("/api/languages")
+def api_languages():
+    return Response(json.dumps(get_supported_languages()), mimetype='application/json')
+
 
 ################################################### Helpers
 
@@ -126,3 +130,16 @@ def get_semantic_map():
     outputfile.close()
 
     return graphdata
+
+
+def get_supported_languages():
+    languages_data = dict()
+    languages_data_file = os.path.join(app.static_folder, 'langinfo', 'languages_data.pickle')
+    with open(languages_data_file, "rb") as f:
+        languages_data = pickle.load(f)
+        
+    languages_list = []
+    for element in languages_data:
+        languages_list.append(element)
+
+    return languages_list
