@@ -11,12 +11,13 @@ import os
 import glob
 import json
 import pickle
+from random import choice
 try:
     import configparser
 except ImportError:
     import ConfigParser as configparser
 
-from flask import Flask, render_template, Markup
+from flask import Flask, render_template, Markup, g
 from flask.ext.mobility import Mobility
 from flask.ext.mobility.decorators import mobile_template
 
@@ -54,6 +55,12 @@ languages = sorted(languages_iso.keys())
 
 # Import flask modules after defining app
 import main.api
+
+###################################### Helpers
+
+@app.before_request
+def choose_color():
+    g.color = choice(['green', 'orange', 'pink', 'purple'])
 
 ###################################### Pages
 

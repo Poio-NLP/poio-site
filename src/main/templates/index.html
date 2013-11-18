@@ -43,13 +43,13 @@
             </div>
             
             <div class="scroll">
-                <a class="scroll_down" href="#"><img src="{{ url_for('static', filename='media/img/scroll_down_green.png') }}" /></a>
+                <a class="scroll_down" href="#"><img src="{{ url_for('static', filename='media/img/scroll_down_{0}.png'.format(g.color)) }}" /></a>
                 <a class="scroll_up" href="#" style="display:none;"><img src="{{ url_for('static', filename='media/img/scroll_up_green.png') }}" /></a>
             </div>
 
             <div class="main">
                 <section class="start">
-                    <img class="poio-logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" />
+                    <img class="poio-logo" src="{{ url_for('static', filename='media/img/poio_logo_{0}.png'.format(g.color)) }}" />
                     <p class="black">
                         Poio is open source technology<br/>for language diversity.
                     </p>
@@ -58,7 +58,7 @@
                     </p>
                 </section>
                 <section class="about">
-                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
+                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_{0}.png'.format(g.color)) }}" /></a>
                     <p id="tools" class="black centered">
                         <a class="icon_prediction" href="#">Try the text predictor<a>,
                         <a class="icon_map" href="#">explore the map</a>,
