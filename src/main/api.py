@@ -7,7 +7,7 @@ try:
 except ImportError:
     import ConfigParser as configparser
 
-from flask import Flask, request, Response
+from flask import Flask, request, Response, url_for
 
 #import rdflib
 import numpy as np
@@ -46,6 +46,10 @@ def api_prediction():
 @app.route("/api/languages")
 def api_languages():
     return Response(json.dumps(get_supported_languages()), mimetype='application/json')
+
+@app.route("/api/corpus")
+def api_corpus():
+    return Response(json.dumps(get_corpus_files()), mimetype='application/json')
 
 
 ################################################### Helpers
@@ -133,13 +137,27 @@ def get_semantic_map():
 
 
 def get_supported_languages():
+    languages_list = []
+    for element in languages_data():
+        languages_list.append(element)
+
+    return sorted(languages_list)
+
+
+def get_corpus_files():
+    iso = request.args.get('iso', '', type=str)
+    
+    if iso in get_supported_languages():
+        files = []
+        for filename in languages_data()[iso]["files"]:
+            files.append(url_for('static', filename="corpus/" + filename, _external=True ))
+
+        return files
+
+
+def languages_data():
     languages_data = dict()
     languages_data_file = os.path.join(app.static_folder, 'langinfo', 'languages_data.pickle')
     with open(languages_data_file, "rb") as f:
         languages_data = pickle.load(f)
-        
-    languages_list = []
-    for element in languages_data:
-        languages_list.append(element)
-
-    return languages_list
+    return languages_data
