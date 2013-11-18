@@ -1,21 +1,119 @@
-{% extends "mobile/base.j2" %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title></title>
+  
+  <link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
+  
+  <!-- Extra Codiqa features -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='media/css/mobile/codiqa.ext.css') }}">
+  
+  <!-- jQuery and jQuery Mobile -->
+  <script src="https://d10ajoocuyu32n.cloudfront.net/jquery-1.9.1.min.js"></script>
+  <script src="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
 
-{% block title %}
-        <h3>
-            Poio
-        </h3>
-{% endblock %}
+  <!-- Extra Codiqa features -->
+  <script src="https://d10ajoocuyu32n.cloudfront.net/codiqa.ext.js"></script>
 
-{% block main %}
-        <!--<div data-role="fieldcontain">
-            <input name="" id="searchinput1" placeholder="Search languages..." value=""
-            type="search">
-        </div>-->
-        <ul data-role="listview" data-divider-theme="b" data-inset="false" data-filter="true">
-            {% for l in languages: %}
-            <li data-theme="c">
-                <a href="{{ url_for('tools_prediction', iso=languages_iso[l]) }}">{{ l }}</a>
-            </li>
-            {% endfor %}
-        </ul>
-{% endblock %}
+</head>
+<body>
+    <!-- Home -->
+    <div data-role="page" id="languages">
+
+        <div data-theme="a" data-role="header">
+            <h3>
+                Poio
+            </h3>
+            {% include "mobile/menu.j2" %}
+        </div>
+
+        <div data-role="content">
+            <ul data-role="listview" data-divider-theme="b" data-inset="false" data-filter="true">
+                {% for l in languages: %}
+                <li data-theme="c">
+                    <a href="#writetyper" onclick="iso='{{ languages_iso[l] }}';">{{ l }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+
+    <div data-role="page" id="writetyper">
+
+        <div data-theme="a" data-role="header">
+            <h3>
+                Poio Writetyper
+            </h3>
+            {% include "mobile/menu.j2" %}
+        </div>
+
+        <div data-role="content">
+            <form>
+                <textarea cols="40" rows="20" name="prediction" id="prediction" placeholder="Type your text here..." autocorrect="off" autocapitalize="off"></textarea>
+                    <div id="predictor">
+                    <span class="predicted-word"><span id="predict-0"></span></span>
+                    <span class="predicted-word"><span id="predict-1"></span></span>
+                    <span class="predicted-word"><span id="predict-2"></span></span>
+                    <span class="predicted-word"><span id="predict-3"></span></span>
+                    <span class="predicted-word"><span id="predict-4"></span></span>
+                    <span class="predicted-word"><span id="predict-5"></span></span>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+
+    <div data-role="page" id="about">
+
+        <div data-theme="a" data-role="header">
+            <h3>
+                About Poio
+            </h3>
+            {% include "mobile/menu.j2" %}
+        </div>
+
+        <div data-role="content">
+            <h1>
+                Poio
+            </h1>
+            <h2>
+                Technologies for Language Diversity
+            </h2>
+            <p>
+              Poio is a free and open source predictive text and transliteration system for lesser-used languages. We support text input for languages like Bavarian, Chechen and Sorbian on mobile phones and desktop computers.
+            </p>
+            <p>
+            The Poio Corpus is a freely available collection of language resources for the lesser-used languages. The data is extracted from free sources like Wikipedia, dictionaries, documents, websites and others. Each corpus is available for download as GrAF files (ISO 24612) for which a Python and a Java library are available to allow unified access. The goal of this project is to make the development of NLP tools for the lesser-used languages easier, or even possible in some cases.
+            </p>
+            <p>
+            The Poio Corpus is a project of the <a href="http://www.cidles.eu">Interdisciplinary Centre for Social and Language Documentation</a> which is dedicated to the documentation and preservation of the linguistic and cultural heritage in Europe.
+            </p>
+            <p>
+                <!-- Begin MailChimp Signup Form -->
+                <div id="mc_embed_signup">
+                <form action="http://brickband.us5.list-manage.com/subscribe/post?u=0dbbf1894965f1d6e74b8728a&amp;id=9887fcd7f4" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                    <label for="mce-EMAIL" style="font-weight:bold;">Subscribe to our mailing list</label>
+                    <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+                    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                </form>
+                </div>
+                <!--End mc_embed_signup-->
+            </p>
+        </div>
+        
+    </div>
+
+    <script language="javascript">
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        iso = 'None';
+    </script>
+
+    <script src="{{ url_for('static', filename='media/js/mobile/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='media/js/prediction.js') }}"></script>
+</body>
+</html>
