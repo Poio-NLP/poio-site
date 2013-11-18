@@ -87,3 +87,77 @@ The returned data is a list (array) of 6 predicted words.
 `Example here. 
 <http://www.poio.eu/api/prediction?iso=bar&text=brez>`_
 
+
+
+For the Supported Languages
++++++++++++++++++++++++++++
+
+This function checks for all the supported languages and returns them in ISO-639-3.
+
+Pyhton Function::
+
+>>> api_languages()
+
+URL::
+
+<ROOT>/api/languages
+
+
+Parameters
+----------
+
+This function takes no parameters, neither from Python nor from an HTTP request.
+
+
+Return
+------
+
+* languages_list (json)
+
+The Python function has no return. The data is returned as Json in the HTTP response, somewhat like an html file.
+The returned data is a list (array) of all the supported languages.
+
+`Example here. 
+<http://www.poio.eu/api/languages>`_
+
+
+
+For the corpus files
+++++++++++++++++++++
+
+This function looks for all the avaible corpus files for a given language and returns a list with the paths of those files.
+
+Pyhton Function::
+
+>>> api_corpus()
+
+URL::
+
+<ROOT>/api/corpus
+
+
+Parameters
+----------
+
+* iso (string)
+
+The Python function takes no parameters, this is due to the fact that it is only called in Javascript.
+The parameters can only be passed using an HTTP request::
+
+<ROOT>/api/corpus?iso=<iso>
+
+For example::
+
+http://www.poio.eu/api/corpus?iso=bar
+
+
+Return
+------
+
+* files (json)
+
+The Python function has no return. The data is returned as Json in the HTTP response, somewhat like an html file.
+The returned data is a list (array) of all the paths for all the avaible corpus files for the given language.
+
+`Example here. 
+<http://www.poio.eu/api/corpus?iso=bar>`_
