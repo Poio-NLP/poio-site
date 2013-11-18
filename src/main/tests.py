@@ -32,6 +32,17 @@ class MainTestCase(unittest.TestCase):
         rv = self.app.get('/api/prediction?iso=bar&text=De')
         assert 'Des' in rv.data
 
+    def test_languages(self):
+        """Test supported languages.""" 
+        rv = self.app.get('/api/languages')
+        assert 'bar' in rv.data
+
+    def test_corpus(self):
+        """Test corpus files.""" 
+        rv = self.app.get('/api/corpus?iso=bar')
+        assert 'barwiki.zip' in rv.data
+
+
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(MainTestCase))
