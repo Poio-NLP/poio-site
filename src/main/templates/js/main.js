@@ -3,8 +3,8 @@
 
 $( "a.icon_prediction" ).hover(
   function() {
-    $( "img#icon_prediction" ).attr('src', '/static/media/img/icon_prediction_selected_green.png');
-    $( "a.icon_prediction" ).css('color', '#2bb673');
+    $( "img#icon_prediction" ).attr('src', '/static/media/img/icon_prediction_selected_{{ g.color }}.png');
+    $( "a.icon_prediction" ).css('color', '{{ g.color_code }}');
   }, function() {
     $( "img#icon_prediction" ).attr('src', '/static/media/img/icon_prediction.png');
     $( "a.icon_prediction" ).css('color', '#000');
@@ -13,8 +13,8 @@ $( "a.icon_prediction" ).hover(
 
 $( "a.icon_testemonial" ).hover(
   function() {
-    $( "img#icon_testemonial" ).attr('src', '/static/media/img/icon_testemonial_selected_green.png');
-    $( "a.icon_testemonial" ).css('color', '#2bb673');
+    $( "img#icon_testemonial" ).attr('src', '/static/media/img/icon_testemonial_selected_{{ g.color }}.png');
+    $( "a.icon_testemonial" ).css('color', '{{ g.color_code }}');
   }, function() {
     $( "img#icon_testemonial" ).attr('src', '/static/media/img/icon_testemonial.png');
     $( "a.icon_testemonial" ).css('color', '#000');
@@ -23,8 +23,8 @@ $( "a.icon_testemonial" ).hover(
 
 $( "a.icon_documentation" ).hover(
   function() {
-    $( "img#icon_documentation" ).attr('src', '/static/media/img/icon_documentation_selected_green.png');
-    $( "a.icon_documentation" ).css('color', '#2bb673');
+    $( "img#icon_documentation" ).attr('src', '/static/media/img/icon_documentation_selected_{{ g.color }}.png');
+    $( "a.icon_documentation" ).css('color', '{{ g.color_code }}');
   }, function() {
     $( "img#icon_documentation" ).attr('src', '/static/media/img/icon_documentation.png');
     $( "a.icon_documentation" ).css('color', '#000');
@@ -33,8 +33,8 @@ $( "a.icon_documentation" ).hover(
 
 $( "a.icon_map" ).hover(
   function() {
-    $( "img#icon_map" ).attr('src', '/static/media/img/icon_map_selected_green.png');
-    $( "a.icon_map" ).css('color', '#2bb673');
+    $( "img#icon_map" ).attr('src', '/static/media/img/icon_map_selected_{{ g.color }}.png');
+    $( "a.icon_map" ).css('color', '{{ g.color_code }}');
   }, function() {
     $( "img#icon_map" ).attr('src', '/static/media/img/icon_map.png');
     $( "a.icon_map" ).css('color', '#000');
@@ -163,7 +163,7 @@ function drawMap() {
 
   function drawLand() {
     c.beginPath();
-    c.fillStyle = "#2bb673";
+    c.fillStyle = "{{ g.color_code }}";
     path(land);
     c.fill();
 

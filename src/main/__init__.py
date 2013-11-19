@@ -60,7 +60,14 @@ import main.api
 
 @app.before_request
 def choose_color():
+    color_codes = {
+        'green': '#2bb673',
+        'orange': '#fcb040',
+        'pink': '#ed0281',
+        'purple': '#8a288f',
+    }
     g.color = choice(['green', 'orange', 'pink', 'purple'])
+    g.color_code = color_codes[g.color]
 
 ###################################### Pages
 

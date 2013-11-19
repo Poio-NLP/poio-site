@@ -1,25 +1,26 @@
+
 /* ==========================================================================
    HTML5 Boilerplate styles - h5bp.com (generated via initializr.com)
    ========================================================================== */
 
 @font-face {
     font-family: MuseoSans100;
-    src: url("MuseoSans_100Web.eot");
+    src: url("/static/media/fonts/MuseoSans_100Web.eot");
 }
 
 @font-face {
     font-family: MuseoSans100;
-    src: url("MuseoSans_100Web.woff") format("woff");
+    src: url("/static/media/fonts/MuseoSans_100Web.woff") format("woff");
 }
 ß
 @font-face {
     font-family: MuseoSans500;
-    src: url("MuseoSans_500Web.eot");
+    src: url("/static/media/fonts/MuseoSans_500Web.eot");
 }
 
 @font-face {
     font-family: MuseoSans500;
-    src: url("MuseoSans_500Web.woff") format("woff");
+    src: url("/static/media/fonts/MuseoSans_500Web.woff") format("woff");
 }
 
 html,
@@ -164,7 +165,7 @@ body, .onepage-wrapper, html {
 .nav span {
     font-family: MuseoSans500, sans-serif;
     font-size: 14px;
-    color: #2bb673;
+    color: {{ g.color_code }};
     text-transform:uppercase;
 }
 
@@ -178,7 +179,7 @@ body, .onepage-wrapper, html {
 
 .nav span a {
     text-decoration: None;
-    color: #2bb673;
+    color: {{ g.color_code }};
 }
 
 .nav span a:active, a:focus {
@@ -211,7 +212,7 @@ section.start p {
 }
 
 section.start p a {
-    color: #2bb673;
+    color: {{ g.color_code }};
     text-decoration: none;
 }
 
@@ -261,7 +262,7 @@ section.tools select {
     width: 540px;
     font-family: MuseoSans100, sans-serif;
     font-size: 47px;
-    color: #2bb673;
+    color: {{ g.color_code }};
     padding: 0px 0px 0px 20px;
     border: 0 none;
     background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat left center;
@@ -329,7 +330,7 @@ section.team p#team_members {
 
 section.team p a {
     text-decoration: none;
-    color: #2bb673;
+    color: {{ g.color_code }};
 }
 
 img.team_photo {
@@ -352,7 +353,7 @@ section.documentation p {
 
 section.documentation p a {
     text-decoration: none;
-    color: #2bb673;
+    color: {{ g.color_code }};
 }
 
 section.documentation img.poio_logo {
@@ -360,7 +361,7 @@ section.documentation img.poio_logo {
 }
 
 p.green {
-    color: #2bb673;
+    color: {{ g.color_code }};
 }
 
 p.black {
