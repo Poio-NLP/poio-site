@@ -11,11 +11,12 @@
         <meta name="viewport" content="width=device-width">
 
         <link rel="stylesheet" href="{{ url_for('static', filename='media/css/normalize.min.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='media/css/main.css') }}">
-        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon_green.ico') }}">
+        
+        <style>
+            {% include 'css/main.css' %}
+        </style>
 
-
-        <!--<link rel="stylesheet" href="css/onepage-scroll.css">-->
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon_{0}.ico'.format(g.color)) }}">
 
         <script src="{{ url_for('static', filename='media/js/libs/modernizr-2.6.2.min.js') }}"></script>
     </head>
@@ -43,13 +44,13 @@
             </div>
             
             <div class="scroll">
-                <a class="scroll_down" href="#"><img src="{{ url_for('static', filename='media/img/scroll_down_green.png') }}" /></a>
-                <a class="scroll_up" href="#" style="display:none;"><img src="{{ url_for('static', filename='media/img/scroll_up_green.png') }}" /></a>
+                <a class="scroll_down" href="#"><img src="{{ url_for('static', filename='media/img/scroll_down_{0}.png'.format(g.color)) }}" /></a>
+                <a class="scroll_up" href="#" style="display:none;"><img src="{{ url_for('static', filename='media/img/scroll_up_{0}.png'.format(g.color)) }}" /></a>
             </div>
 
             <div class="main">
                 <section class="start">
-                    <img class="poio-logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" />
+                    <img class="poio-logo" src="{{ url_for('static', filename='media/img/poio_logo_{0}.png'.format(g.color)) }}" />
                     <p class="black">
                         Poio is open source technology<br/>for language diversity.
                     </p>
@@ -58,7 +59,7 @@
                     </p>
                 </section>
                 <section class="about">
-                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
+                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_{0}.png'.format(g.color)) }}" /></a>
                     <p id="tools" class="black centered">
                         <a class="icon_prediction" href="#">Try the text predictor<a>,
                         <a class="icon_map" href="#">explore the map</a>,
@@ -81,7 +82,7 @@
                     </p>
                 </section>
                 <section class="tools">
-                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
+                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_{0}.png'.format(g.color)) }}" /></a>
                     <p class="green centered">
                         <div class="parentSelect">
                             <select id="language_chooser">
@@ -102,26 +103,26 @@
                         <textarea id="prediction" placeholder="Click here and write your text..."></textarea>
                     </p>
                     <p id="predictor" class="black centered">
-                        <span><img src="{{ url_for('static', filename='media/img/f1_green.png') }}" /><span class="predicted-word" id="predict-0"></span></span>
-                        <span><img src="{{ url_for('static', filename='media/img/f2_green.png') }}" /><span class="predicted-word" id="predict-1"></span></span>
-                        <span><img src="{{ url_for('static', filename='media/img/f3_green.png') }}" /><span class="predicted-word" id="predict-2"></span></span>
-                        <span><img src="{{ url_for('static', filename='media/img/f4_green.png') }}" /><span class="predicted-word" id="predict-3"></span></span>
-                        <span><img src="{{ url_for('static', filename='media/img/f5_green.png') }}" /><span class="predicted-word" id="predict-4"></span></span>
-                        <span><img src="{{ url_for('static', filename='media/img/f6_green.png') }}" /><span class="predicted-word" id="predict-5"></span></span>
+                        <span><img src="{{ url_for('static', filename='media/img/f1_{0}.png'.format(g.color)) }}" /><span class="predicted-word" id="predict-0"></span></span>
+                        <span><img src="{{ url_for('static', filename='media/img/f2_{0}.png'.format(g.color)) }}" /><span class="predicted-word" id="predict-1"></span></span>
+                        <span><img src="{{ url_for('static', filename='media/img/f3_{0}.png'.format(g.color)) }}" /><span class="predicted-word" id="predict-2"></span></span>
+                        <span><img src="{{ url_for('static', filename='media/img/f4_{0}.png'.format(g.color)) }}" /><span class="predicted-word" id="predict-3"></span></span>
+                        <span><img src="{{ url_for('static', filename='media/img/f5_{0}.png'.format(g.color)) }}" /><span class="predicted-word" id="predict-4"></span></span>
+                        <span><img src="{{ url_for('static', filename='media/img/f6_{0}.png'.format(g.color)) }}" /><span class="predicted-word" id="predict-5"></span></span>
                     </p>
                     <!--<p class="black centered" style="font-size:1em;">
                         Try the text prediction on your mobile phone. Just visit poio.eu.
                     </p>-->
                 </section>
                 <section class="map">
-                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
+                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_{0}.png'.format(g.color)) }}" /></a>
                     <div id="map" style="width:930px; height:500px;"></div>
                     <p class="black centered">
                         Drag the map to explore the world!
                     </p>
                 </section>
                 <section class="team">
-                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
+                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_{0}.png'.format(g.color)) }}" /></a>
                     <p class="black centered">
                         Poio was created at CIDLeS
                     </p>
@@ -131,34 +132,34 @@
                     <p id="team_members">
                         <p class="team_member" style="margin-right: 30px;">
                             <img class="team_photo" src="{{ url_for('static', filename='media/img/vera_photo.png') }}" /><br />
-                            <img class="team_name" src="{{ url_for('static', filename='media/img/vera_text_green.png') }}" /><br />
+                            <img class="team_name" src="{{ url_for('static', filename='media/img/vera_text_{0}.png'.format(g.color)) }}" /><br />
                             Vera is the president of CIDLeS and head 
                             of its Language Documentation and Language Typology group.
                             <br/>
-                            <a href="http://www.cidles.eu/about/team/vera-ferreira/"><img src="{{ url_for('static', filename='media/img/plus_green.png') }}" /></a>
+                            <a href="http://www.cidles.eu/about/team/vera-ferreira/"><img src="{{ url_for('static', filename='media/img/plus_{0}.png'.format(g.color)) }}" /></a>
                         </p>
                         <p class="team_member" style="margin-right: 30px;">
                             <img class="team_photo" src="{{ url_for('static', filename='media/img/peter_photo.png') }}" /><br />
-                            <img class="team_name" src="{{ url_for('static', filename='media/img/peter_text_green.png') }}" style="margin-bottom:17px;" /><br />
+                            <img class="team_name" src="{{ url_for('static', filename='media/img/peter_text_{0}.png'.format(g.color)) }}" style="margin-bottom:17px;" /><br />
                             Peter is the head of the CIDLeS Media Lab. He is responsible for
                             the development of Poio and its text prediction.
                             <br/>
-                            <a href="http://www.cidles.eu/about/team/peter-bouda/"><img src="{{ url_for('static', filename='media/img/plus_green.png') }}" /></a>
+                            <a href="http://www.cidles.eu/about/team/peter-bouda/"><img src="{{ url_for('static', filename='media/img/plus_{0}.png'.format(g.color)) }}" /></a>
                         </p>
                         <p class="team_member">
                             <img class="team_photo" src="{{ url_for('static', filename='media/img/rita_photo.png') }}" /><br />
-                            <img class="team_name" src="{{ url_for('static', filename='media/img/rita_text_green.png') }}" /><br />
+                            <img class="team_name" src="{{ url_for('static', filename='media/img/rita_text_{0}.png'.format(g.color)) }}" /><br />
                             Rita is a research assistant at CIDLES and the responsible
                             for its working group on Language Revitalization.
                             <br/>
-                            <a href="http://www.cidles.eu/about/team/rita-pedro/"><img src="{{ url_for('static', filename='media/img/plus_green.png') }}" /></a>
+                            <a href="http://www.cidles.eu/about/team/rita-pedro/"><img src="{{ url_for('static', filename='media/img/plus_{0}.png'.format(g.color)) }}" /></a>
                         </p>
                         <br style="clear:both;" />
                         <br />
                     </p>
                 </section>
                 <section class="documentation">
-                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_green.png') }}" /></a>
+                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_{0}.png'.format(g.color)) }}" /></a>
                     <p class="black centered">
                         Poio is free and open source. You can read, download or fork the code of Poio at Github:
                     </p>
@@ -174,7 +175,7 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='media/js/libs/jquery-1.10.1.min.js') }}"><\/script>')</script>
-        <script type=text/javascript>
+        <script type="text/javascript">
             $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
             var languages = JSON.parse('{{ languages_json }}');
             var mapDrawn = false;
@@ -188,7 +189,11 @@
 
 
         <script src="{{ url_for('static', filename='media/js/plugins.js') }}"></script>
-        <script src="{{ url_for('static', filename='media/js/main.js') }}"></script>
+        
+        <script type="text/javascript">
+            {% include 'js/main.js' %}
+        </script>
+
         <script src="{{ url_for('static', filename='media/js/prediction.js') }}"></script>
     </body>
 </html>
