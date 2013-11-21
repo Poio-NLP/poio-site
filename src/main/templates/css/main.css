@@ -250,24 +250,6 @@ section.tools p {
     font-size: 47px;
 }
 
-section.tools div.parentSelect {
-    margin-left: auto;
-    margin-right: auto;
-    width: 520px;
-    padding-left: 10px;
-    overflow: hidden;
-}
-
-section.tools select {
-    width: 540px;
-    font-family: MuseoSans100, sans-serif;
-    font-size: 47px;
-    color: {{ g.color_code }};
-    padding: 0px 0px 0px 20px;
-    border: 0 none;
-    background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat left center;
-}
-
 section.tools textarea {
     font-family: MuseoSans100, sans-serif;
     background-color: #f2f2f3;

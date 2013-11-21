@@ -11,6 +11,8 @@
         <meta name="viewport" content="width=device-width">
 
         <link rel="stylesheet" href="{{ url_for('static', filename='media/css/normalize.min.css') }}">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='media/css/chosen.css') }}">
         
         <style>
             {% include 'css/main.css' %}
@@ -84,20 +86,14 @@
                 <section class="tools">
                     <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_{0}.png'.format(g.color)) }}" /></a>
                     <p class="green centered">
-                        <div class="parentSelect">
-                            <select id="language_chooser">
-                                <option value="none">Choose your language</option>
-                                {% for l in languages %}
+
+                        <select id="language_chooser" data-placeholder="Choose your language" class="chosen-select" style="width: 540px;">
+                            <option value=""></option>
+                            {% for l in languages %}
                                 <option value="{{ languages_iso[l] }}">{{ l }}</option>
-                                {% endfor %}
-                            </select>
-                            <select data-placeholder="Choose a Country..." class="chosen-select">
-                                <option value="none">Choose your language</option>
-                                {% for l in languages %}
-                                <option value="{{ languages_iso[l] }}">{{ l }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+                            {% endfor %}
+                        </select>
+
                     </p>
                     <p class="black centered">
                         <textarea id="prediction" placeholder="Click here and write your text..."></textarea>
@@ -181,12 +177,10 @@
             var mapDrawn = false;
         </script>
 
-        <script src="{{ url_for('static', filename='media/js/libs/chosen.jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='media/js/libs/d3.v3.min.js') }}"></script>
         <script src="{{ url_for('static', filename='media/js/libs/queue.v1.min.js') }}"></script>
         <script src="{{ url_for('static', filename='media/js/libs/topojson.v1.min.js') }}"></script>
         <script src="{{ url_for('static', filename='media/js/libs/kinetic-v4.5.4.min.js') }}"></script>
-
 
         <script src="{{ url_for('static', filename='media/js/plugins.js') }}"></script>
         
