@@ -141,6 +141,14 @@ $( "a.icon_documentation" ).click(function() {
   $(".main").moveTo(6);
 });
 
+
+///////////////////////////////// Use jquery chosen for language selector
+
+$(function(){
+  $(".chosen-select").chosen();
+});
+
+
 ///////////////////////////////////////////////// Map
 
 function drawMap() {
