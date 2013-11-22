@@ -149,7 +149,7 @@ body, .onepage-wrapper, html {
 .nav {
     position: fixed !important;
     overflow: visible;
-    margin-left: 411px;
+    margin-left: 330px;
     margin-top: 62px;
     z-index: 9999;    
 }
@@ -225,7 +225,7 @@ section.about img.poio_logo {
 }
 
 section.about p {
-    font-size: 48px;
+    font-size: 38px;
 }
 
 section.about p a {
