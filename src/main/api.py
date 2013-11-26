@@ -2,12 +2,13 @@ import os
 import pickle
 import json
 import operator
+import datetime
 try:
     import configparser
 except ImportError:
     import ConfigParser as configparser
 
-from flask import Flask, request, Response, url_for
+from flask import Flask, request, Response, url_for, make_response
 
 #import rdflib
 import numpy as np
@@ -37,18 +38,30 @@ class DemoCallback(pressagio.callback.Callback):
 
 @app.route("/api/semantics")
 def api_semantics():
+    if 'APIlimiter' not in request.cookies:
+        if limit("semantics"):
+            return Response("You have reached the number of allowed request for today.")
     return Response(json.dumps(get_semantic_map()), mimetype='application/json')
 
 @app.route("/api/prediction")
 def api_prediction():
+    if 'APIlimiter' not in request.cookies:
+        if limit("prediction"):
+            return Response("You have reached the number of allowed request for today.")
     return Response(json.dumps(get_prediction()), mimetype='application/json')
 
 @app.route("/api/languages")
 def api_languages():
+    if 'APIlimiter' not in request.cookies:
+        if limit("languages"):
+            return Response("You have reached the number of allowed request for today.")
     return Response(json.dumps(get_supported_languages()), mimetype='application/json')
 
 @app.route("/api/corpus")
 def api_corpus():
+    if 'APIlimiter' not in request.cookies:
+        if limit("corpus"):
+            return Response("You have reached the number of allowed request for today.")
     return Response(json.dumps(get_corpus_files()), mimetype='application/json')
 
 
@@ -161,3 +174,16 @@ def languages_data():
     with open(languages_data_file, "rb") as f:
         languages_data = pickle.load(f)
     return languages_data
+
+
+def limit(table):
+    ip = request.remote_addr
+    date = datetime.datetime.now()
+    
+    
+    
+    
+    return False
+
+    #if limit is reached return True
+    #else return False
