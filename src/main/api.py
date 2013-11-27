@@ -18,6 +18,8 @@ import scipy.linalg
 import pressagio.callback
 import pressagio
 
+import sqlite3
+
 # Import Flask app
 from main import app
 #from main import dbconnections
@@ -33,6 +35,9 @@ class DemoCallback(pressagio.callback.Callback):
     def future_stream(self):
         return ''
 
+
+con = sqlite3.connect(os.path.abspath(os.path.join(app.static_folder, "limits.sqlite")), check_same_thread=False)
+cur = con.cursor()
 
 ################################################### API routes
 
@@ -177,11 +182,30 @@ def languages_data():
 
 
 def limit(table):
-    ip = request.remote_addr
+    if table == "languages":
+        requestsLimit = 1000
+    if table == "corpus":
+        requestsLimit = 1000
+    if table == "prediction":
+        requestsLimit = 10000
+    if table == "semantics":
+        requestsLimit = 100
+
+    ip = str(request.remote_addr)
     date = datetime.datetime.now()
+    print date
+    return False
     
-    
-    
+    cur.execute("select * from {0} where ip == '{1}'".format(table, ip))
+    if len(cur.fetchall()) == 0:
+        cur.execute("INSERT INTO {0} VALUES ('{1}', '{2}', 1)".format(table, ip, date))
+
+
+
+    cur.execute("select * from test")
+    print [record[0] for record in cur.fetchall()]
+
+    con.commit()
     
     return False
 
