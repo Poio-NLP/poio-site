@@ -43,7 +43,11 @@ def main(argv):
             "{http://s3.amazonaws.com/doc/2006-03-01/}Contents"):
         key = contents.find("{http://s3.amazonaws.com/doc/2006-03-01/}Key")
         file_url = key.text
-        subdir, filename = file_url.split("/")
+        print(file_url)
+        if "/" in file_url:
+            subdir, filename = file_url.split("/")
+        else:
+            continue
         date = contents.find("{http://s3.amazonaws.com/doc/2006-03-01/}LastModified")
         server_date = dateutil.parser.parse(date.text)
 
