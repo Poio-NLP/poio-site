@@ -93,7 +93,8 @@ $('textarea#prediction').bind('input propertychange', function() {
   $.getJSON($SCRIPT_ROOT + '/api/prediction', {
 
     text: $('textarea#prediction').val(),
-    iso : iso
+    iso : iso, 
+    token: "{{ token }}"
     
     }, function(data) {
     

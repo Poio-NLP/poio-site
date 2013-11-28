@@ -11,14 +11,16 @@ import os
 import glob
 import json
 import pickle
+import time
 import datetime
+import jwt
 from random import choice
 try:
     import configparser
 except ImportError:
     import ConfigParser as configparser
 
-from flask import Flask, render_template, Markup, g, make_response
+from flask import Flask, render_template, Markup, g
 from flask.ext.mobility import Mobility
 from flask.ext.mobility.decorators import mobile_template
 
@@ -77,16 +79,12 @@ def choose_color():
 def index(template):
     languages_json = json.dumps(languages_data)
 
-    #Set APIlimiter cookie
-    resp =  make_response(render_template(template, languages = languages,
+    token = jwt.encode({'exp': time.mktime((datetime.datetime.now() + datetime.timedelta(hours=1)).timetuple())}, 'supersecret')
+    print token
+    return render_template(template, languages = languages,
         languages_iso = languages_iso,
-        languages_json = Markup(languages_json)))
-
-    tomorrow = datetime.datetime.now() + datetime.timedelta(days = 1)
-    expires = datetime.datetime.strftime(tomorrow, "%a, %d-%b-%Y %H:%M:%S GMT")
-    resp.set_cookie('APIlimiter', 'invalid', expires = expires)
-    
-    return resp
+        languages_json = Markup(languages_json),
+        token = token)
     
 # We still need those for the mobile app
 

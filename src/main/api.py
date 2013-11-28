@@ -3,6 +3,7 @@ import pickle
 import json
 import operator
 import datetime
+import jwt
 try:
     import configparser
 except ImportError:
@@ -43,34 +44,39 @@ cur = con.cursor()
 
 @app.route("/api/semantics")
 def api_semantics():
-    if 'APIlimiter' not in request.cookies:
-        if limit("semantics"):
-            return Response("You have reached the number of allowed request for today.")
+    check_request()
     return Response(json.dumps(get_semantic_map()), mimetype='application/json')
 
 @app.route("/api/prediction")
 def api_prediction():
-    if 'APIlimiter' not in request.cookies:
-        if limit("prediction"):
-            return Response("You have reached the number of allowed request for today.")
+    check_request()
     return Response(json.dumps(get_prediction()), mimetype='application/json')
 
 @app.route("/api/languages")
 def api_languages():
-    if 'APIlimiter' not in request.cookies:
-        if limit("languages"):
-            return Response("You have reached the number of allowed request for today.")
+    check_request()
     return Response(json.dumps(get_supported_languages()), mimetype='application/json')
 
 @app.route("/api/corpus")
 def api_corpus():
-    if 'APIlimiter' not in request.cookies:
-        if limit("corpus"):
-            return Response("You have reached the number of allowed request for today.")
+    check_request()
     return Response(json.dumps(get_corpus_files()), mimetype='application/json')
 
 
 ################################################### Helpers
+
+def check_request():
+    token = request.args.get('token', '', type=str)
+    print token
+    if token == '':
+        if limit("corpus"):
+            return Response("Sorry, you have reached the number of allowed requests for today.")
+    else:
+        try:
+            jwt.decode(token, "supersecret")
+        except:
+            return Response("Bad token")
+
 
 def get_prediction():
     iso = request.args.get('iso', '', type=str)
@@ -192,22 +198,18 @@ def limit(table):
         requestsLimit = 100
 
     ip = str(request.remote_addr)
-    date = datetime.datetime.now()
-    print date
-    return False
-    
+    date = datetime.date.today()
+
     cur.execute("select * from {0} where ip == '{1}'".format(table, ip))
     if len(cur.fetchall()) == 0:
         cur.execute("INSERT INTO {0} VALUES ('{1}', '{2}', 1)".format(table, ip, date))
 
+    cur.execute("SELECT count FROM {0} WHERE ip='{1}'".format(table, ip))
+    count =  int(cur.fetchall()[0][0])
 
+    if count >= requestsLimit:
+        return True
 
-    cur.execute("select * from test")
-    print [record[0] for record in cur.fetchall()]
-
-    con.commit()
-    
+    cur.execute("UPDATE {0} SET count={1} WHERE ip='{2}'".format(table, str(count + 1), ip))
+    con.commit()    
     return False
-
-    #if limit is reached return True
-    #else return False
