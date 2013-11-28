@@ -42,6 +42,33 @@ function normalizeText() {
 
 }
 
+///////////////////////////////////////////////// API calls
+
+function getPredictions(iso) {
+  var iso;
+
+  if ($('select#language_chooser').length > 0)
+    iso = $('select#language_chooser').val();
+  else
+    iso = window.iso;
+
+  $.getJSON($SCRIPT_ROOT + '/api/prediction', {
+
+    text: $('textarea#prediction').val(),
+    iso : iso
+    
+    }, function(data) {
+    
+      var length = data.length, element = null;
+      for (var i = 0; i < length; i++) {
+        element = data[i];
+        $("#predict-" + i).text(element)
+
+      }
+    }
+  );
+}
+
 ///////////////////////////////////////////////// Helpers
 
 function getCaretPosition (ctrl) {
@@ -85,27 +112,9 @@ function addText(text) {
 
 ////////////////////////////////////////////// Prediction
 
-$('textarea#prediction').bind('input propertychange', function() {
-
-  if ($('select#language_chooser').length > 0)
-    iso = $('select#language_chooser').val();
-
-  $.getJSON($SCRIPT_ROOT + '/api/prediction', {
-
-    text: $('textarea#prediction').val(),
-    iso : iso
-    
-    }, function(data) {
-    
-      var length = data.length, element = null;
-      for (var i = 0; i < length; i++) {
-        element = data[i];
-        $("#predict-" + i).text(element)
-
-      }
-      normalizeText();
-    }
-  );
+$('textarea#prediction').bind('input focus', function() {
+  getPredictions();
+  normalizeText();
   return false;
 });
 
@@ -120,6 +129,7 @@ $( 'textarea#prediction' ).keydown(function(evt) {
     i = charCode - 112;
     text = $("#predict-" + i).text();
     addText(text);
+    getPredictions();
     return false;
   }
   else return true;
@@ -130,6 +140,14 @@ $( '.predicted-word' ).on('touchstart', function(e) {
     e.preventDefault();
     text = $(this).text();
     addText(text);
+    getPredictions();
 }).on('touchend touchcancel', function(e) {
     e.preventDefault();
 });
+
+$( '.predicted-word' ).on('click', function(e) {
+    text = $(this).text();
+    addText(text);
+    getPredictions();
+    $( 'textarea#prediction' ).focus();
+})

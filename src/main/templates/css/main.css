@@ -269,7 +269,7 @@ p#predictor {
     margin-right: auto;
 }
 
-p#predictor span.predicted-word {
+p#predictor span.predicted-word-inside {
     font-size: 19px;
     margin-left: 15px;
     margin-right: 25px;

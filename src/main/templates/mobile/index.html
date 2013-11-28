@@ -109,8 +109,8 @@
     </div>
 
     <script language="javascript">
-        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-        iso = 'None';
+        var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        var iso = 'None';
     </script>
 
     <script src="{{ url_for('static', filename='media/js/mobile/main.js') }}"></script>
