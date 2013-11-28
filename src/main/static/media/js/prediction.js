@@ -103,9 +103,9 @@ $('textarea#prediction').bind('input propertychange', function() {
         $("#predict-" + i).text(element)
 
       }
+      normalizeText();
     }
   );
-  normalizeText();
   return false;
 });
 

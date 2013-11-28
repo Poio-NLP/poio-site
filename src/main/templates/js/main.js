@@ -215,6 +215,7 @@ function drawMap() {
       circle.on("click", function(){
         //window.location = '/tools/prediction/' + key
         $('select#language_chooser').val(key);
+        $('select#language_chooser').trigger('chosen:updated');
         $(".main").moveUp();
       });
 
