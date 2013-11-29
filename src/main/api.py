@@ -80,9 +80,11 @@ def get_prediction():
     return predictions
 
 
-def get_semantic_map():
-    iso = request.args.get('iso', '', type=str)
-    term = request.args.get('term', '')
+def get_semantic_map(iso = None, term = None):
+    if not iso:
+        iso = request.args.get('iso', '', type=str)
+    if not term:
+        term = request.args.get('term', '')
 
     plot_dir = os.path.join(app.static_folder, 'plots')
     plot_filename = u"{0}-{1}.pickle".format(iso, term)
