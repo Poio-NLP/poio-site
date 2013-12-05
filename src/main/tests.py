@@ -42,6 +42,17 @@ class MainTestCase(unittest.TestCase):
         rv = self.app.get('/api/corpus?iso=bar')
         assert 'barwiki.zip' in rv.data
 
+    def test_api_limits(self):
+        """Test APÎ request limits"""
+        dic = {"languages":1000, "corpus":1000, "prediction":10000, "semantics":100}
+
+        for function in dic:
+            if function == "languages":
+                for count in xrange(0, dic[function])
+                    print count
+                    rv = self.app.get('/api/languages')
+                    assert 'bar' in rv.data
+
 
 def suite():
     suite = unittest.TestSuite()

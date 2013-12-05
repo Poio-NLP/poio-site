@@ -44,38 +44,37 @@ cur = con.cursor()
 
 @app.route("/api/semantics")
 def api_semantics():
-    check_request()
+    check_request("semantics")
     return Response(json.dumps(get_semantic_map()), mimetype='application/json')
 
 @app.route("/api/prediction")
 def api_prediction():
-    check_request()
+    check_request("prediction")
     return Response(json.dumps(get_prediction()), mimetype='application/json')
 
 @app.route("/api/languages")
 def api_languages():
-    check_request()
+    check_request("languages")
     return Response(json.dumps(get_supported_languages()), mimetype='application/json')
 
 @app.route("/api/corpus")
 def api_corpus():
-    check_request()
+    check_request("corpus")
     return Response(json.dumps(get_corpus_files()), mimetype='application/json')
 
 
 ################################################### Helpers
 
-def check_request():
+def check_request(table):
     token = request.args.get('token', '', type=str)
-    print token
     if token == '':
-        if limit("corpus"):
+        if limit(table):
             return Response("Sorry, you have reached the number of allowed requests for today.")
     else:
         try:
             jwt.decode(token, "supersecret")
         except:
-            return Response("Bad token")
+            return Response("Bad token") # ?respond bad token or check for limit and serve request?
 
 
 def get_prediction():
