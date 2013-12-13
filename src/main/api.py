@@ -55,7 +55,7 @@ def api_prediction():
 @app.route("/api/languages")
 def api_languages():
     check_request("languages")
-    return Response(json.dumps(get_supported_languages()), mimetype='application/json')
+    #return Response(json.dumps(get_supported_languages()), mimetype='application/json')
 
 @app.route("/api/corpus")
 def api_corpus():
@@ -204,9 +204,10 @@ def limit(table):
         cur.execute("INSERT INTO {0} VALUES ('{1}', '{2}', 1)".format(table, ip, date))
 
     cur.execute("SELECT count FROM {0} WHERE ip='{1}'".format(table, ip))
-    count =  int(cur.fetchall()[0][0])
+    count = int(cur.fetchall()[0][0])
+    print count
 
-    if count >= requestsLimit:
+    if count > requestsLimit:
         return True
 
     cur.execute("UPDATE {0} SET count={1} WHERE ip='{2}'".format(table, str(count + 1), ip))

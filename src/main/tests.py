@@ -9,6 +9,8 @@
 
 import unittest
 import main
+import os
+import sqlite3
 
 class MainTestCase(unittest.TestCase):
 
@@ -43,15 +45,30 @@ class MainTestCase(unittest.TestCase):
         assert 'barwiki.zip' in rv.data
 
     def test_api_limits(self):
-        """Test APÎ request limits"""
+        """Test API request limits"""
         dic = {"languages":1000, "corpus":1000, "prediction":10000, "semantics":100}
 
+        con = sqlite3.connect(os.path.abspath(os.path.join(main.app.static_folder, "limits.sqlite")), check_same_thread=False)
+        cur = con.cursor()
+
         for function in dic:
+            cur.execute("DELETE FROM {0} WHERE ip='None'".format(function))
+            con.commit()
+
             if function == "languages":
-                for count in xrange(0, dic[function])
-                    print count
+                for count in xrange(0, dic[function]):
                     rv = self.app.get('/api/languages')
                     assert 'bar' in rv.data
+                rv = self.app.get('/api/languages')
+                assert 'bar' in rv.data
+
+            elif function == "corpus":
+                for count in xrange(0, dic[function]):
+                    rv = self.app.get('/api/corpus?iso=bar')
+                    assert 'barwiki.zip' in rv.data
+                rv = self.app.get('/api/corpus?iso=bar')
+                assert 'barwiki.zip' in rv.data
+
 
 
 def suite():
