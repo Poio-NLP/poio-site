@@ -44,23 +44,31 @@ cur = con.cursor()
 
 @app.route("/api/semantics")
 def api_semantics():
-    check_request()
-    return Response(json.dumps(get_semantic_map()), mimetype='application/json')
+    if check_request():
+        return Response(json.dumps(get_semantic_map()), mimetype='application/json')
+    else:
+        return Response("Sorry, you have reached the number of allowed requests for today.")
 
 @app.route("/api/prediction")
 def api_prediction():
-    check_request()
-    return Response(json.dumps(get_prediction()), mimetype='application/json')
+    if check_request():
+        return Response(json.dumps(get_prediction()), mimetype='application/json')
+    else:
+        return Response("Sorry, you have reached the number of allowed requests for today.")
 
 @app.route("/api/languages")
 def api_languages():
-    check_request()
-    return Response(json.dumps(get_supported_languages()), mimetype='application/json')
+    if check_request():
+        return Response(json.dumps(get_supported_languages()), mimetype='application/json')
+    else:
+        return Response("Sorry, you have reached the number of allowed requests for today.")
 
 @app.route("/api/corpus")
 def api_corpus():
-    check_request()
-    return Response(json.dumps(get_corpus_files()), mimetype='application/json')
+    if check_request():
+        return Response(json.dumps(get_corpus_files()), mimetype='application/json')
+    else:
+        return Response("Sorry, you have reached the number of allowed requests for today.")
 
 
 ################################################### Helpers
@@ -69,14 +77,14 @@ def check_request():
     token = request.args.get('token', '', type=str)
     print token
     if token == '':
-        if limit("corpus"):
-            return Response("Sorry, you have reached the number of allowed requests for today.")
+        if limit_reached("corpus"):
+            return False
     else:
         try:
             jwt.decode(token, "supersecret")
         except:
-            return Response("Bad token")
-
+            return False
+    return True
 
 def get_prediction():
     iso = request.args.get('iso', '', type=str)
@@ -187,7 +195,7 @@ def languages_data():
     return languages_data
 
 
-def limit(table):
+def limit_reached(table):
     if table == "languages":
         requestsLimit = 1000
     if table == "corpus":
