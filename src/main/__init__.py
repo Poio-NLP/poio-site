@@ -80,7 +80,7 @@ def index(template):
     languages_json = json.dumps(languages_data)
 
     token = jwt.encode({'exp': time.mktime((datetime.datetime.now() + datetime.timedelta(hours=1)).timetuple())}, 'supersecret')
-    
+
     return render_template(template, languages = languages,
         languages_iso = languages_iso,
         languages_json = Markup(languages_json),

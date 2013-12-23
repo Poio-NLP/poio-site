@@ -94,7 +94,7 @@ $('textarea#prediction').bind('input propertychange', function() {
 
     text: $('textarea#prediction').val(),
     iso : iso, 
-    token: "{{ token }}"
+    token: TOKEN
     
     }, function(data) {
     

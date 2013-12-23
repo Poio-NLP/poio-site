@@ -44,6 +44,7 @@ cur = con.cursor()
 
 @app.route("/api/semantics")
 def api_semantics():
+<<<<<<< HEAD
     if check_request():
         return Response(json.dumps(get_semantic_map()), mimetype='application/json')
     else:
@@ -73,11 +74,10 @@ def api_corpus():
 
 ################################################### Helpers
 
-def check_request():
+def check_request(table):
     token = request.args.get('token', '', type=str)
-    print token
     if token == '':
-        if limit_reached("corpus"):
+        if limit_reached(table):
             return False
     else:
         try:
@@ -85,6 +85,7 @@ def check_request():
         except:
             return False
     return True
+    
 
 def get_prediction():
     iso = request.args.get('iso', '', type=str)
@@ -213,9 +214,10 @@ def limit_reached(table):
         cur.execute("INSERT INTO {0} VALUES ('{1}', '{2}', 1)".format(table, ip, date))
 
     cur.execute("SELECT count FROM {0} WHERE ip='{1}'".format(table, ip))
-    count =  int(cur.fetchall()[0][0])
+    count = int(cur.fetchall()[0][0])
+    print count
 
-    if count >= requestsLimit:
+    if count > requestsLimit:
         return True
 
     cur.execute("UPDATE {0} SET count={1} WHERE ip='{2}'".format(table, str(count + 1), ip))
