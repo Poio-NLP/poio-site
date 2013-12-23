@@ -60,15 +60,30 @@ class MainTestCase(unittest.TestCase):
                     rv = self.app.get('/api/languages')
                     assert 'bar' in rv.data
                 rv = self.app.get('/api/languages')
-                assert 'bar' in rv.data
+                assert 'bar' not in rv.data
 
             elif function == "corpus":
                 for count in xrange(0, dic[function]):
                     rv = self.app.get('/api/corpus?iso=bar')
                     assert 'barwiki.zip' in rv.data
                 rv = self.app.get('/api/corpus?iso=bar')
-                assert 'barwiki.zip' in rv.data
+                assert 'barwiki.zip' not in rv.data
 
+            elif function == "prediction":
+                for count in xrange(0, dic[function]):
+                    rv = self.app.get('/api/prediction?iso=bar&text=De')
+                    assert 'Des' in rv.data
+                rv = self.app.get('/api/prediction?iso=bar&text=De')
+                assert 'Des' not in rv.data
+
+            elif function == "semantics":
+                for count in xrange(0, dic[function]):
+                    rv = self.app.get('/api/semantics?iso=bar&term=brezn')
+                    assert 'fettn' in rv.data
+                    assert 'brezn' in rv.data
+                rv = self.app.get('/api/semantics?iso=bar&term=brezn')
+                assert 'fettn' not in rv.data
+                assert 'brezn' not in rv.data
 
 
 def suite():

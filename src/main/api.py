@@ -44,29 +44,28 @@ cur = con.cursor()
 
 @app.route("/api/semantics")
 def api_semantics():
-<<<<<<< HEAD
-    if check_request():
+    if check_request("semantics"):
         return Response(json.dumps(get_semantic_map()), mimetype='application/json')
     else:
         return Response("Sorry, you have reached the number of allowed requests for today.")
 
 @app.route("/api/prediction")
 def api_prediction():
-    if check_request():
+    if check_request("prediction"):
         return Response(json.dumps(get_prediction()), mimetype='application/json')
     else:
         return Response("Sorry, you have reached the number of allowed requests for today.")
 
 @app.route("/api/languages")
 def api_languages():
-    if check_request():
+    if check_request("languages"):
         return Response(json.dumps(get_supported_languages()), mimetype='application/json')
     else:
         return Response("Sorry, you have reached the number of allowed requests for today.")
 
 @app.route("/api/corpus")
 def api_corpus():
-    if check_request():
+    if check_request("corpus"):
         return Response(json.dumps(get_corpus_files()), mimetype='application/json')
     else:
         return Response("Sorry, you have reached the number of allowed requests for today.")
@@ -85,7 +84,7 @@ def check_request(table):
         except:
             return False
     return True
-    
+
 
 def get_prediction():
     iso = request.args.get('iso', '', type=str)
