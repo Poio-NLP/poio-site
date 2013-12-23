@@ -2,12 +2,14 @@ import os
 import pickle
 import json
 import operator
+import datetime
+import jwt
 try:
     import configparser
 except ImportError:
     import ConfigParser as configparser
 
-from flask import Flask, request, Response, url_for
+from flask import Flask, request, Response, url_for, make_response
 
 #import rdflib
 import numpy as np
@@ -16,6 +18,8 @@ import scipy.linalg
 
 import pressagio.callback
 import pressagio
+
+import sqlite3
 
 # Import Flask app
 from main import app
@@ -33,26 +37,54 @@ class DemoCallback(pressagio.callback.Callback):
         return ''
 
 
+con = sqlite3.connect(os.path.abspath(os.path.join(app.static_folder, "limits.sqlite")), check_same_thread=False)
+cur = con.cursor()
+
 ################################################### API routes
 
 @app.route("/api/semantics")
 def api_semantics():
-    return Response(json.dumps(get_semantic_map()), mimetype='application/json')
+    if check_request("semantics"):
+        return Response(json.dumps(get_semantic_map()), mimetype='application/json')
+    else:
+        return Response("Sorry, you have reached the number of allowed requests for today.")
 
 @app.route("/api/prediction")
 def api_prediction():
-    return Response(json.dumps(get_prediction()), mimetype='application/json')
+    if check_request("prediction"):
+        return Response(json.dumps(get_prediction()), mimetype='application/json')
+    else:
+        return Response("Sorry, you have reached the number of allowed requests for today.")
 
 @app.route("/api/languages")
 def api_languages():
-    return Response(json.dumps(get_supported_languages()), mimetype='application/json')
+    if check_request("languages"):
+        return Response(json.dumps(get_supported_languages()), mimetype='application/json')
+    else:
+        return Response("Sorry, you have reached the number of allowed requests for today.")
 
 @app.route("/api/corpus")
 def api_corpus():
-    return Response(json.dumps(get_corpus_files()), mimetype='application/json')
+    if check_request("corpus"):
+        return Response(json.dumps(get_corpus_files()), mimetype='application/json')
+    else:
+        return Response("Sorry, you have reached the number of allowed requests for today.")
 
 
 ################################################### Helpers
+
+def check_request(table):
+    token = request.args.get('token', '', type=str)
+    if token == '':
+        if limit_reached(table):
+            return False
+    else:
+        try:
+            jwt.decode(token, "supersecret")
+        except:
+            return False
+    return True
+
 
 def get_prediction():
     iso = request.args.get('iso', '', type=str)
@@ -163,3 +195,32 @@ def languages_data():
     with open(languages_data_file, "rb") as f:
         languages_data = pickle.load(f)
     return languages_data
+
+
+def limit_reached(table):
+    if table == "languages":
+        requestsLimit = 1000
+    if table == "corpus":
+        requestsLimit = 1000
+    if table == "prediction":
+        requestsLimit = 10000
+    if table == "semantics":
+        requestsLimit = 100
+
+    ip = str(request.remote_addr)
+    date = datetime.date.today()
+
+    cur.execute("select * from {0} where ip == '{1}'".format(table, ip))
+    if len(cur.fetchall()) == 0:
+        cur.execute("INSERT INTO {0} VALUES ('{1}', '{2}', 1)".format(table, ip, date))
+
+    cur.execute("SELECT count FROM {0} WHERE ip='{1}'".format(table, ip))
+    count = int(cur.fetchall()[0][0])
+    print count
+
+    if count > requestsLimit:
+        return True
+
+    cur.execute("UPDATE {0} SET count={1} WHERE ip='{2}'".format(table, str(count + 1), ip))
+    con.commit()    
+    return False

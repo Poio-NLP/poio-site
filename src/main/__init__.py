@@ -11,6 +11,9 @@ import os
 import glob
 import json
 import pickle
+import time
+import datetime
+import jwt
 from random import choice
 try:
     import configparser
@@ -76,10 +79,13 @@ def choose_color():
 def index(template):
     languages_json = json.dumps(languages_data)
 
+    token = jwt.encode({'exp': time.mktime((datetime.datetime.now() + datetime.timedelta(hours=1)).timetuple())}, 'supersecret')
+
     return render_template(template, languages = languages,
         languages_iso = languages_iso,
-        languages_json = Markup(languages_json))
-
+        languages_json = Markup(languages_json),
+        token = token)
+    
 # We still need those for the mobile app
 
 @app.route("/about")

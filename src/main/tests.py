@@ -9,6 +9,8 @@
 
 import unittest
 import main
+import os
+import sqlite3
 
 class MainTestCase(unittest.TestCase):
 
@@ -41,6 +43,47 @@ class MainTestCase(unittest.TestCase):
         """Test corpus files.""" 
         rv = self.app.get('/api/corpus?iso=bar')
         assert 'barwiki.zip' in rv.data
+
+    def test_api_limits(self):
+        """Test API request limits"""
+        dic = {"languages":1000, "corpus":1000, "prediction":10000, "semantics":100}
+
+        con = sqlite3.connect(os.path.abspath(os.path.join(main.app.static_folder, "limits.sqlite")), check_same_thread=False)
+        cur = con.cursor()
+
+        for function in dic:
+            cur.execute("DELETE FROM {0} WHERE ip='None'".format(function))
+            con.commit()
+
+            if function == "languages":
+                for count in xrange(0, dic[function]):
+                    rv = self.app.get('/api/languages')
+                    assert 'bar' in rv.data
+                rv = self.app.get('/api/languages')
+                assert 'bar' not in rv.data
+
+            elif function == "corpus":
+                for count in xrange(0, dic[function]):
+                    rv = self.app.get('/api/corpus?iso=bar')
+                    assert 'barwiki.zip' in rv.data
+                rv = self.app.get('/api/corpus?iso=bar')
+                assert 'barwiki.zip' not in rv.data
+
+            elif function == "prediction":
+                for count in xrange(0, dic[function]):
+                    rv = self.app.get('/api/prediction?iso=bar&text=De')
+                    assert 'Des' in rv.data
+                rv = self.app.get('/api/prediction?iso=bar&text=De')
+                assert 'Des' not in rv.data
+
+            elif function == "semantics":
+                for count in xrange(0, dic[function]):
+                    rv = self.app.get('/api/semantics?iso=bar&term=brezn')
+                    assert 'fettn' in rv.data
+                    assert 'brezn' in rv.data
+                rv = self.app.get('/api/semantics?iso=bar&term=brezn')
+                assert 'fettn' not in rv.data
+                assert 'brezn' not in rv.data
 
 
 def suite():
