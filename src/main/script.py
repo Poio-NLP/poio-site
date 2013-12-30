@@ -24,9 +24,9 @@ del _buildout_path
 
 
 # bin/paster serve parts/etc/deploy.ini
-def make_app(global_conf={}, config=DEPLOY_CFG, debug=False):
+def make_app(global_conf={}, debug=False):
     from main import app
-    app.config.from_pyfile(abspath(config))
+    #app.config.from_pyfile(abspath(config))
     app.debug = debug
     return app
 
@@ -34,7 +34,7 @@ def make_app(global_conf={}, config=DEPLOY_CFG, debug=False):
 # bin/paster serve parts/etc/debug.ini
 def make_debug(global_conf={}, **conf):
     from werkzeug.debug import DebuggedApplication
-    app = make_app(global_conf, config=DEBUG_CFG, debug=True)
+    app = make_app(global_conf, debug=True)
     return DebuggedApplication(app, evalex=True)
 
 

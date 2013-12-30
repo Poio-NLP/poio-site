@@ -7,19 +7,21 @@ try:
 except ImportError:
     import ConfigParser as configparser
 
-from flask import Flask, request, Response, url_for
+from flask import Blueprint, Flask, request, Response, url_for, current_app
 
 #import rdflib
 import numpy as np
 import scipy.spatial
 import scipy.linalg
+import jwt
 
 import pressagio.callback
 import pressagio
 
 # Import Flask app
-from main import app
-#from main import dbconnections
+#from main import app
+
+api = Blueprint('api', __name__)
 
 class DemoCallback(pressagio.callback.Callback):
     def __init__(self, buffer):
@@ -35,19 +37,41 @@ class DemoCallback(pressagio.callback.Callback):
 
 ################################################### API routes
 
-@app.route("/api/semantics")
+@api.before_request
+def before_request():
+    # check if we have a token
+    token = request.args.get('token', '', type=str)
+    if token == '':
+        if not 'X-Mashape-Proxy-Secret' in request.headers:
+            return Response(json.dumps({'error':
+                    'You do not have the rights to access the API.'}),
+                mimetype='application/json')
+        if request.headers['X-Mashape-Proxy-Secret'] != \
+                current_app.config['MASHAPE_SECRET']:
+            return Response(json.dumps({'error':
+                    'You do not have the rights to access the API.'}),
+                mimetype='application/json')
+    else:
+        try:
+            jwt.decode(token, current_app.config['SECRET_KEY'])
+        except jwt.DecodeError, jwt.ExpiredSignature:
+            return Response(json.dumps({'error':
+                    'You do not have the rights to access the API.'}),
+                mimetype='application/json')
+
+@api.route("/semantics")
 def api_semantics():
     return Response(json.dumps(get_semantic_map()), mimetype='application/json')
 
-@app.route("/api/prediction")
+@api.route("/prediction")
 def api_prediction():
     return Response(json.dumps(get_prediction()), mimetype='application/json')
 
-@app.route("/api/languages")
+@api.route("/languages")
 def api_languages():
     return Response(json.dumps(get_supported_languages()), mimetype='application/json')
 
-@app.route("/api/corpus")
+@api.route("/corpus")
 def api_corpus():
     return Response(json.dumps(get_corpus_files()), mimetype='application/json')
 
@@ -60,16 +84,19 @@ def get_prediction():
     if iso != 'none':
         string_buffer = request.args.get('text', '')
 
-        db_file = os.path.abspath(os.path.join(app.static_folder, 'prediction', "{0}.sqlite".format(iso)))
-        config_file = os.path.join(app.static_folder, 'prediction', "{0}.ini".format(iso))
+        config_file_base = current_app.config['PREDICTION_INI']
+        if "{0}" in config_file_base:
+            config_file_base = config_file_base.format(iso)
+        config_file = os.path.join(api.root_path, 'static', 'prediction',
+            config_file_base)
         config = configparser.ConfigParser()
         config.read(config_file)
         dbconnection = None
         if config.get("Database", "class") == 'PostgresDatabaseConnector':
             config.set("Database", "database", iso)
-#            if iso in dbconnections:
-#                dbconnection = dbconnections[iso]
         else:
+            db_file = os.path.abspath(os.path.join(api.root_path, 'static',
+                'prediction', "{0}.sqlite".format(iso)))
             config.set("Database", "database", db_file)
 
         callback = DemoCallback(string_buffer)
@@ -86,7 +113,7 @@ def get_semantic_map(iso = None, term = None):
     if not term:
         term = request.args.get('term', '')
 
-    plot_dir = os.path.join(app.static_folder, 'plots')
+    plot_dir = os.path.join(api.root_path, 'static', 'plots')
     plot_filename = u"{0}-{1}.pickle".format(iso, term)
     plot_filepath = os.path.join(plot_dir, plot_filename)
 
@@ -96,7 +123,7 @@ def get_semantic_map(iso = None, term = None):
         inputfile.close()
         return graphdata
 
-    sem_dir = os.path.join(app.static_folder, 'semantics')
+    sem_dir = os.path.join(api.root_path, 'static', 'semantics')
 
     indices_file = os.path.join(sem_dir, "{0}-indices.pickle".format(iso))
     with open(indices_file, "rb") as f:
@@ -142,7 +169,6 @@ def get_supported_languages():
     languages_list = []
     for element in languages_data():
         languages_list.append(element)
-
     return sorted(languages_list)
 
 
@@ -159,7 +185,8 @@ def get_corpus_files():
 
 def languages_data():
     languages_data = dict()
-    languages_data_file = os.path.join(app.static_folder, 'langinfo', 'languages_data.pickle')
+    languages_data_file = os.path.join(api.root_path, 'static', 'langinfo',
+        'languages_data.pickle')
     with open(languages_data_file, "rb") as f:
         languages_data = pickle.load(f)
     return languages_data

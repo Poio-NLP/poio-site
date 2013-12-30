@@ -11,6 +11,7 @@ import os
 import glob
 import json
 import pickle
+import datetime
 from random import choice
 try:
     import configparser
@@ -21,13 +22,20 @@ from flask import Flask, render_template, Markup, g, request, url_for, redirect
 from flask.ext.mobility import Mobility
 from flask.ext.mobility.decorators import mobile_template
 
+import jwt
 import psycopg2
 
 from werkzeug.contrib.cache import SimpleCache
 cache = SimpleCache()
 
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_object('main.default_settings')
+app.config.from_pyfile('application.cfg', silent=True)
+
 Mobility(app)
+
+from main.api import api
+app.register_blueprint(api, url_prefix='/api')
 
 # Creating global language data
 languages_data = dict()
@@ -44,7 +52,6 @@ for iso in languages_data:
 
 languages = sorted(languages_iso.keys())
 
-# Import flask modules after defining app
 import main.api
 
 ###################################### Helpers
@@ -63,13 +70,15 @@ def choose_color():
 ###################################### Pages
 
 @app.route("/")
-@mobile_template('mobile/index.html')
+@mobile_template('{mobile}/index.html')
 def index(template):
     languages_json = json.dumps(languages_data)
-
+    token = jwt.encode({'exp': datetime.datetime.utcnow() + \
+        datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
     return render_template(template, languages = languages,
         languages_iso = languages_iso,
-        languages_json = Markup(languages_json))
+        languages_json = Markup(languages_json),
+        token = token)
 
 # We still need those for the mobile app
 

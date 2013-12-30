@@ -173,6 +173,7 @@
         <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='media/js/libs/jquery-1.10.1.min.js') }}"><\/script>')</script>
         <script type="text/javascript">
             $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+            $TOKEN = '{{ token }}';
             var languages = JSON.parse('{{ languages_json }}');
             var mapDrawn = false;
         </script>

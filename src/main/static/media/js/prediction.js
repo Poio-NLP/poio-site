@@ -55,7 +55,8 @@ function getPredictions(iso) {
   $.getJSON($SCRIPT_ROOT + '/api/prediction', {
 
     text: $('textarea#prediction').val(),
-    iso : iso
+    iso : iso,
+    token : $TOKEN
     
     }, function(data) {
     

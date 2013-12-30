@@ -19,7 +19,7 @@ class MainTestCase(unittest.TestCase):
     def test_main(self):
         """Test rendered index page."""
         rv = self.app.get('/')
-        assert 'Language Diversity' in rv.data
+        assert 'language diversity' in rv.data
 
     def test_get_semantic_map(self):
         """Test get_semantic_map."""
