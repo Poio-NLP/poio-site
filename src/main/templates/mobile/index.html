@@ -11,6 +11,9 @@
   
   <!-- Extra Codiqa features -->
   <link rel="stylesheet" href="{{ url_for('static', filename='media/css/mobile/codiqa.ext.css') }}">
+
+  <!-- Custom css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='media/css/mobile/jqm-icon-pack-2.0-original.css') }}" />
   
   <!-- jQuery and jQuery Mobile -->
   <script src="https://d10ajoocuyu32n.cloudfront.net/jquery-1.9.1.min.js"></script>
@@ -54,7 +57,7 @@
 
         <div data-role="content">
             <form>
-                <textarea cols="40" rows="20" name="prediction" id="prediction" placeholder="Type your text here..." autocorrect="off" autocapitalize="off"></textarea>
+                <textarea name="prediction" id="prediction" placeholder="Type your text here..." autocorrect="off" autocapitalize="off"></textarea>
                     <div id="predictor">
                     <span class="predicted-word"><span id="predict-0"></span></span>
                     <span class="predicted-word"><span id="predict-1"></span></span>
@@ -64,6 +67,8 @@
                     <span class="predicted-word"><span id="predict-5"></span></span>
                 </div>
             </form>
+            <a href="#" id="sendsms" data-role="button" data-icon="chat" data-mini="true" data-inline="true">SMS</a>
+            <a href="#" id="sendmail" data-role="button" data-icon="email" data-mini="true" data-inline="true" rel="external">Mail</a>
         </div>
         
     </div>
