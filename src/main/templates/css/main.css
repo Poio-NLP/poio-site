@@ -250,6 +250,11 @@ section.tools p {
     font-size: 47px;
 }
 
+section.tools p.green a {
+    color: {{ g.color_code }};
+    text-decoration: none;
+}
+
 section.tools textarea {
     font-family: MuseoSans100, sans-serif;
     background-color: #f2f2f3;
