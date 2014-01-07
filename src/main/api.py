@@ -41,23 +41,27 @@ class DemoCallback(pressagio.callback.Callback):
 def before_request():
     # check if we have a token
     token = request.args.get('token', '', type=str)
+    access_granted = False
     if token == '':
-        if not 'X-Mashape-Proxy-Secret' in request.headers:
-            return Response(json.dumps({'error':
-                    'You do not have the rights to access the API.'}),
-                mimetype='application/json')
-        if request.headers['X-Mashape-Proxy-Secret'] != \
+        if 'X-Mashape-Proxy-Secret' in request.headers and \
+                request.headers['X-Mashape-Proxy-Secret'] == \
                 current_app.config['MASHAPE_SECRET']:
-            return Response(json.dumps({'error':
-                    'You do not have the rights to access the API.'}),
-                mimetype='application/json')
+            access_granted = True
+        elif 'X-Poio-Android-IPL' in request.headers and \
+                request.headers['X-Poio-Android-IPL'] == \
+                current_app.config['IPL_SECRET']:
+            access_granted = True
     else:
         try:
             jwt.decode(token, current_app.config['SECRET_KEY'])
+            access_granted = True
         except jwt.DecodeError, jwt.ExpiredSignature:
-            return Response(json.dumps({'error':
-                    'You do not have the rights to access the API.'}),
-                mimetype='application/json')
+            pass
+
+    if not access_granted:
+        return Response(json.dumps({'error':
+                'You do not have the rights to access the API.'}),
+            mimetype='application/json')
 
 @api.route("/semantics")
 def api_semantics():
