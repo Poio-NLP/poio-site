@@ -325,7 +325,7 @@ function drawMap() {
       .delay(1000)
       .duration(2500)
       .tween("rotate", function() {
-        var r = d3.interpolate(projection.rotate(), [-45, -55]);
+        var r = d3.interpolate(projection.rotate(), [-40, -55]);
         var s = d3.interpolate(projection.scale(), 900);
         return function(t) {
           projection.rotate(r(t));
