@@ -39,6 +39,11 @@ class DemoCallback(pressagio.callback.Callback):
 
 @api.before_request
 def before_request():
+    print(request.endpoint)
+    if request.endpoint == 'api.api_languages' or \
+            request.endpoint == 'api.api_corpus':
+        return
+
     # check if we have a token
     token = request.args.get('token', '', type=str)
     access_granted = False
