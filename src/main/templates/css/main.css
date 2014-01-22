@@ -250,7 +250,7 @@ section.tools p {
     font-size: 47px;
 }
 
-section.tools p.green a {
+section.tools p a {
     color: {{ g.color_code }};
     text-decoration: none;
 }
