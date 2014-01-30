@@ -39,7 +39,6 @@ class DemoCallback(pressagio.callback.Callback):
 
 @api.before_request
 def before_request():
-    print(request.endpoint)
     if request.endpoint == 'api.api_languages' or \
             request.endpoint == 'api.api_corpus':
         return
