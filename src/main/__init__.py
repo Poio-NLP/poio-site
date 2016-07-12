@@ -34,8 +34,8 @@ app.config.from_pyfile('application.cfg', silent=True)
 
 Mobility(app)
 
-from main.api import api
-app.register_blueprint(api, url_prefix='/api')
+from main.api import fapi
+app.register_blueprint(fapi, url_prefix='/api')
 
 # Creating global language data
 languages_data = dict()

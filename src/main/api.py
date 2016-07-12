@@ -21,7 +21,7 @@ import pressagio
 # Import Flask app
 #from main import app
 
-api = Blueprint('api', __name__)
+fapi = Blueprint('api', __name__)
 
 class DemoCallback(pressagio.callback.Callback):
     def __init__(self, buffer):
@@ -30,14 +30,14 @@ class DemoCallback(pressagio.callback.Callback):
 
     def past_stream(self):
         return self.buffer
-    
+
     def future_stream(self):
         return ''
 
 
 ################################################### API routes
 
-@api.before_request
+@fapi.before_request
 def before_request():
     if request.endpoint == 'api.api_languages' or \
             request.endpoint == 'api.api_corpus':
@@ -61,25 +61,25 @@ def before_request():
             access_granted = True
         except jwt.DecodeError, jwt.ExpiredSignature:
             pass
-
+    # return
     if not access_granted:
         return Response(json.dumps({'error':
                 'You do not have the rights to access the API.'}),
             mimetype='application/json')
 
-@api.route("/semantics")
+@fapi.route("/semantics")
 def api_semantics():
     return Response(json.dumps(get_semantic_map()), mimetype='application/json')
 
-@api.route("/prediction")
+@fapi.route("/prediction")
 def api_prediction():
     return Response(json.dumps(get_prediction()), mimetype='application/json')
 
-@api.route("/languages")
+@fapi.route("/languages")
 def api_languages():
     return Response(json.dumps(get_supported_languages()), mimetype='application/json')
 
-@api.route("/corpus")
+@fapi.route("/corpus")
 def api_corpus():
     return Response(json.dumps(get_corpus_files()), mimetype='application/json')
 
@@ -121,7 +121,7 @@ def get_semantic_map(iso = None, term = None):
     if not term:
         term = request.args.get('term', '')
 
-    plot_dir = os.path.join(api.root_path, 'static', 'plots')
+    plot_dir = os.path.join(fapi.root_path, 'static', 'plots')
     plot_filename = u"{0}-{1}.pickle".format(iso, term)
     plot_filepath = os.path.join(plot_dir, plot_filename)
 
@@ -131,12 +131,12 @@ def get_semantic_map(iso = None, term = None):
         inputfile.close()
         return graphdata
 
-    sem_dir = os.path.join(api.root_path, 'static', 'semantics')
+    sem_dir = os.path.join(fapi.root_path, 'static', 'semantics')
 
     indices_file = os.path.join(sem_dir, "{0}-indices.pickle".format(iso))
     with open(indices_file, "rb") as f:
         indices = pickle.load(f)
-        keys = [k 
+        keys = [k
             for k, _ in sorted(indices.items(), key=operator.itemgetter(1))]
     if not term in indices:
         return None
@@ -182,7 +182,7 @@ def get_supported_languages():
 
 def get_corpus_files():
     iso = request.args.get('iso', '', type=str)
-    
+
     if iso in get_supported_languages():
         files = []
         for filename in languages_data()[iso]["files"]:

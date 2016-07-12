@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='media/css/site.css') }}">
   <link href='//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
   <link href='//fonts.googleapis.com/css?family=Archivo+Black' rel='stylesheet' type='text/css'>
-    
+
     <style>
         circle.dot {
           fill: steelblue;
@@ -80,14 +80,14 @@
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
   </script>
 
- 
+
     <script src="{{ url_for('static', filename='media/js/libs/d3.v3.min.js') }}"></script>
     <!-- Remote loading does not work via SSL -->
     <!--<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
 
     <script>
         //GET DATA
-        var xmlHttp = null, 
+        var xmlHttp = null,
             data = null;
 
         xmlHttp = new XMLHttpRequest();
@@ -95,7 +95,7 @@
         xmlHttp.send( null );
 
         data = JSON.parse(xmlHttp.responseText);
-        
+
         document.createComment("<!-- SEMANTIC MAP TEST DATA: \n" + data + "\n-->");
         //
 
@@ -107,7 +107,7 @@
             };
 
         function mouseoverEvent() {
-            d3.select(this.parentNode).moveToFront();      
+            d3.select(this.parentNode).moveToFront();
             d3.select(this.parentNode).select("rect")
                 .style("fill-opacity", "1");
             d3.select(this.parentNode).select("circle")
@@ -157,7 +157,7 @@
                 .scale(1)
                 .scaleExtent([0.05, 10])
                 .on("zoom", zoom);
-                
+
         var svg = d3.select("#semantic_map").append("svg")
             .attr("width", width)
             .attr("height", height)
