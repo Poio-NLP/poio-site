@@ -9,8 +9,7 @@
 
 import os
 import sys
-import urllib2
-import urlparse
+from urllib.request import urlopen
 import optparse
 import datetime
 import dateutil.parser
@@ -33,7 +32,7 @@ def main(argv):
     (options, _) = parser.parse_args()
 
     url = "http://s3.amazonaws.com/poiocorpus"
-    xml_page = urllib2.urlopen(url)
+    xml_page = urlopen(url)
     tree = ET.ElementTree(file=xml_page)
     root = tree.getroot()
 

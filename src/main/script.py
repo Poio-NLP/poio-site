@@ -75,7 +75,7 @@ def _serve(action, debug=False, dry_run=False):
         config = DEPLOY_INI
 
     if os.name == 'nt':
-        paster_script = os.path.join('bin', 'paster-script.py')
+        paster_script = os.path.join('venv', 'scripts', 'paster.exe')
     else:
         paster_script = os.path.join('bin', 'paster')
 
@@ -87,7 +87,7 @@ def _serve(action, debug=False, dry_run=False):
     else:
         argv += [action]
     # Print the 'paster' command
-    print ' '.join(argv)
+    print(' '.join(argv))
     if dry_run:
         return
     # Configure logging and lock file

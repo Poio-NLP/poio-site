@@ -59,7 +59,7 @@ def before_request():
         try:
             jwt.decode(token, current_app.config['SECRET_KEY'])
             access_granted = True
-        except jwt.DecodeError, jwt.ExpiredSignature:
+        except (jwt.DecodeError, jwt.ExpiredSignature):
             pass
     # return
     if not access_granted:
