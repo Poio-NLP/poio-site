@@ -33,14 +33,12 @@
         <div class="wrapper">
             <div class="nav">
                 <span class="menu_about"><a class="menu_about" href="#">About</a></span>
-                <span class="menu_tools"><a class="menu_tools" href="#">Writetyper</a></span>
+                <span class="menu_tools"><a class="menu_tools" href="#">Text Prediction</a></span>
                 <span class="menu_map"><a class="menu_map" href="#">Map</a></span>
-                <span class="menu_team"><a class="menu_team" href="#">Team</a></span>
                 <span class="menu_documentation"><a class="menu_documentation" href="#">Documentation</a></span>
             </div>
 
             <div id="social">
-                <a href="https://plus.google.com/b/106266889101240189549/106266889101240189549/posts"><img class="social" src="{{ url_for('static', filename='media/img/social_buttons_google.png') }}" /></a>
                 <a href="https://github.com/cidles/poio-corpus"><img class="social" src="{{ url_for('static', filename='media/img/social_buttons_github.png') }}" /></a>
                 <a href="mailto:pbouda@cidles.eu"><img src="{{ url_for('static', filename='media/img/social_buttons_mail.png') }}" /></a>
             </div>
@@ -57,7 +55,7 @@
                         Poio is open source technology<br/>for language diversity.
                     </p>
                     <p class="green">
-                        <a class="scroll_down" href="#">Scroll down to get an overview<br/> of our tools and our team.</a>
+                        <a class="scroll_down" href="#">Scroll down to get an overview<br/> of the supported languages.</a>
                     </p>
                 </section>
                 <section class="about">
@@ -65,8 +63,7 @@
                     <p id="tools" class="black centered">
                         <a class="icon_prediction" href="#">Try the text predictor<a>,
                         <a class="icon_map" href="#">explore the map</a>,<br/>
-                        <a class="icon_documentation" href="#">read the documentation</a>,
-                        <a class="icon_testemonial" href="http://eepurl.com/Hhmoj">subscribe to our newsletter</a>.
+                        <a class="icon_documentation" href="#">read the documentation</a>.
                     </p>
                     <p class="centered">
                         <a class="icon_prediction" href="#">
@@ -106,53 +103,12 @@
                         <span class="predicted-word"><img src="{{ url_for('static', filename='media/img/f5_{0}.png'.format(g.color)) }}" /><span class="predicted-word-inside" id="predict-4"></span></span>
                         <span class="predicted-word"><img src="{{ url_for('static', filename='media/img/f6_{0}.png'.format(g.color)) }}" /><span class="predicted-word-inside" id="predict-5"></span></span>
                     </p>
-                    <p class="centered" style="font-size:1.5em;">
-                        Want to learn more about Poio?
-                        <a href="http://www.cidles.eu/summer-school-coding-for-language-communities-2014/">Participate in our summer school!</a>
-                    </p>
                 </section>
                 <section class="map">
                     <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_{0}.png'.format(g.color)) }}" /></a>
                     <div id="map" style="width:930px; height:500px;"></div>
                     <p class="black centered">
                         Drag the map to explore the world!
-                    </p>
-                </section>
-                <section class="team">
-                    <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_{0}.png'.format(g.color)) }}" /></a>
-                    <p class="black centered">
-                        Poio was created at CIDLeS
-                    </p>
-                    <p class="green centered">
-                        <a href="http://www.cidles.eu/about/team/">by Vera, Peter, Rita and their team</a>
-                    </p>
-                    <p id="team_members">
-                        <p class="team_member" style="margin-right: 30px;">
-                            <img class="team_photo" src="{{ url_for('static', filename='media/img/vera_photo.png') }}" /><br />
-                            <img class="team_name" src="{{ url_for('static', filename='media/img/vera_text_{0}.png'.format(g.color)) }}" /><br />
-                            Vera is the president of CIDLeS and head 
-                            of its Language Documentation and Language Typology group.
-                            <br/>
-                            <a href="http://www.cidles.eu/about/team/vera-ferreira/"><img src="{{ url_for('static', filename='media/img/plus_{0}.png'.format(g.color)) }}" /></a>
-                        </p>
-                        <p class="team_member" style="margin-right: 30px;">
-                            <img class="team_photo" src="{{ url_for('static', filename='media/img/peter_photo.png') }}" /><br />
-                            <img class="team_name" src="{{ url_for('static', filename='media/img/peter_text_{0}.png'.format(g.color)) }}" style="margin-bottom:17px;" /><br />
-                            Peter is the head of the CIDLeS Media Lab. He is responsible for
-                            the development of Poio and its text prediction.
-                            <br/>
-                            <a href="http://www.cidles.eu/about/team/peter-bouda/"><img src="{{ url_for('static', filename='media/img/plus_{0}.png'.format(g.color)) }}" /></a>
-                        </p>
-                        <p class="team_member">
-                            <img class="team_photo" src="{{ url_for('static', filename='media/img/rita_photo.png') }}" /><br />
-                            <img class="team_name" src="{{ url_for('static', filename='media/img/rita_text_{0}.png'.format(g.color)) }}" /><br />
-                            Rita is a research assistant at CIDLES and the responsible
-                            for its working group on Language Revitalization.
-                            <br/>
-                            <a href="http://www.cidles.eu/about/team/rita-pedro/"><img src="{{ url_for('static', filename='media/img/plus_{0}.png'.format(g.color)) }}" /></a>
-                        </p>
-                        <br style="clear:both;" />
-                        <br />
                     </p>
                 </section>
                 <section class="documentation">
@@ -163,17 +119,6 @@
                     <p class="green centered">
                         <a href="http://poio.readthedocs.org">
                             http://poio.readthedocs.org
-                        </a>
-                    </p>
-                    <p class="black centered">
-                        &nbsp;
-                    </p>
-                    <p class="black centered">
-                        Want to learn more about Poio?
-                    </p>
-                    <p class="green centered">
-                        <a href="http://www.cidles.eu/summer-school-coding-for-language-communities-2014/">
-                            Participate in our summer school!
                         </a>
                     </p>
                 </section>

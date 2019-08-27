@@ -12,7 +12,7 @@
     font-family: MuseoSans100;
     src: url("/static/media/fonts/MuseoSans_100Web.woff") format("woff");
 }
-ß
+
 @font-face {
     font-family: MuseoSans500;
     src: url("/static/media/fonts/MuseoSans_500Web.eot");
@@ -90,7 +90,7 @@ textarea {
     height: 10px;
     width: 100%;
     background: #f2f2f3 url('/static/media/img/backline.png') repeat-x left top;
-    z-index: 9999; 
+    z-index: 9999;
 }
 
 #social {
@@ -98,7 +98,7 @@ textarea {
     overflow: visible;
     margin-left: 809px;
     margin-top: 658px;
-    z-index: 9999;    
+    z-index: 9999;
 }
 
 img.social {
@@ -124,6 +124,7 @@ body, .onepage-wrapper, html {
   position: relative;
   padding: 0;
   -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
   margin-top: 51px;
 }
 
@@ -166,11 +167,11 @@ body, .onepage-wrapper, html {
     font-family: MuseoSans500, sans-serif;
     font-size: 14px;
     color: {{ g.color_code }};
-    text-transform:uppercase;
+    text-transform: uppercase;
 }
 
 .nav span:hover {
-    background-color: black;    
+    background-color: black;
 }
 
 .nav span.selected {
@@ -191,7 +192,7 @@ body, .onepage-wrapper, html {
     overflow: visible;
     margin-left: 411px;
     bottom: 0;
-    z-index: 9999;    
+    z-index: 9999;
 }
 
 /*
@@ -288,45 +289,6 @@ p#predictor span.predicted-word-inside {
 
 section.map img.poio_logo {
     margin-bottom: 0px;
-}
-
-
-/*
- * Section: Team
- */
-
-
-section.team img.poio_logo {
-    margin-bottom: 12px;
-}
-
-section.team p {
-    font-size: 42px;
-    margin: 0;
-}
-
-section.team p.team_member {
-    width: 290px;
-    font-size: 13px;
-    float: left;
-}
-
-section.team p#team_members {
-    margin-top: 23px;
-}
-
-section.team p a {
-    text-decoration: none;
-    color: {{ g.color_code }};
-}
-
-img.team_photo {
-    margin-left: 50px;
-}
-
-img.team_name {
-    margin-top: 8px;
-    margin-bottom: 16px;
 }
 
 /*

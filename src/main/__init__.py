@@ -2,10 +2,10 @@
 #
 # Poio Corpus
 #
-# Copyright (C) 2009-2013 Poio Project
+# Copyright (C) 2009-2019 Poio Project
 # Author: Peter Bouda <pbouda@cidles.eu>
 # URL: <http://media.cidles.eu/poio/>
-# For license information, see LICENSE.TXT
+# For license information, see LICENSE
 
 import os
 import glob
