@@ -38,3 +38,6 @@ nosetests.xml
 .vscode
 
 *~
+src/main/static/langinfo/languages_data.pickle
+src/main/static/media/fonts/
+
