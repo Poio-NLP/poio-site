@@ -19,8 +19,8 @@ except ImportError:
     import ConfigParser as configparser
 
 from flask import Flask, render_template, Markup, g, request, url_for, redirect
-from flask.ext.mobility import Mobility
-from flask.ext.mobility.decorators import mobile_template
+from flask_mobility import Mobility
+from flask_mobility.decorators import mobile_template
 
 import jwt
 import psycopg2

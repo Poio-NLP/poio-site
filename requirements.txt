@@ -1,0 +1,7 @@
+pressagio
+Flask
+Flask-Mobility
+pyjwt
+psycopg2
+numpy
+scipy
