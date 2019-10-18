@@ -40,4 +40,5 @@ nosetests.xml
 *~
 src/main/static/langinfo/languages_data.pickle
 src/main/static/media/fonts/
-
+src/instance/
+src/main/static/prediction/
