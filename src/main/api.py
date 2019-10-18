@@ -95,7 +95,7 @@ def get_prediction():
         config_file_base = current_app.config['PREDICTION_INI']
         if "{0}" in config_file_base:
             config_file_base = config_file_base.format(iso)
-        config_file = os.path.join(api.root_path, 'static', 'prediction',
+        config_file = os.path.join(fapi.root_path, 'static', 'prediction',
             config_file_base)
         config = configparser.ConfigParser()
         config.read(config_file)
@@ -103,7 +103,7 @@ def get_prediction():
         if config.get("Database", "class") == 'PostgresDatabaseConnector':
             config.set("Database", "database", iso)
         else:
-            db_file = os.path.abspath(os.path.join(api.root_path, 'static',
+            db_file = os.path.abspath(os.path.join(fapi.root_path, 'static',
                 'prediction', "{0}.sqlite".format(iso)))
             config.set("Database", "database", db_file)
 

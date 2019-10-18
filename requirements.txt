@@ -5,3 +5,4 @@ pyjwt
 psycopg2
 numpy
 scipy
+gunicorn

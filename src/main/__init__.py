@@ -74,7 +74,7 @@ def choose_color():
 def index(template):
     languages_json = json.dumps(languages_data)
     token = jwt.encode({'exp': datetime.datetime.utcnow() + \
-        datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
+        datetime.timedelta(minutes=60)}, app.config['SECRET_KEY']).decode("utf-8")
     return render_template(template, languages = languages,
         languages_iso = languages_iso,
         languages_json = Markup(languages_json),
