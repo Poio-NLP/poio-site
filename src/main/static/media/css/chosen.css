@@ -41,7 +41,7 @@
   overflow: hidden;
   padding: 0 0 0 8px;
   height: 60px;
-  background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat left center;
+  background: transparent url("https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat left center;
   background-position: 5px 25px;
   /*border: 1px solid #aaa;
   border-radius: 5px;
@@ -442,5 +442,5 @@ div#language_chooser_chosen {
     font-size: 47px;
     text-align: left;
     border: 0 none;
-    /*background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat left center;*/
+    /*background: transparent url("https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat left center;*/
 }
