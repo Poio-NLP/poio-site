@@ -1,4 +1,5 @@
-pressagio
+pressagio==0.1.5
+poiolib==0.1.1
 Flask
 Flask-Mobility
 pyjwt

@@ -84,7 +84,7 @@
                         <select id="language_chooser" data-placeholder="Choose your language" class="chosen-select" style="width: 540px;">
                             <option value=""></option>
                             {% for l in languages %}
-                                <option value="{{ languages_iso[l] }}">{{ l }}</option>
+                                <option value="{{ l }}">{{ languages_info[l]['name'] }}</option>
                             {% endfor %}
                         </select>
 
@@ -128,7 +128,7 @@
         <script type="text/javascript">
             $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
             $TOKEN = '{{ token }}';
-            var languages = JSON.parse('{{ languages_json }}');
+            var languages = JSON.parse('{{ languages_info|tojson|safe }}');
             var mapDrawn = false;
         </script>
 

@@ -180,8 +180,8 @@ function drawMap() {
   function drawLanguages() {
     Object.keys(languages).forEach(function(key) {
       var value = languages[key];
-      var centerX = projection([value.geo.lon, value.geo.lat])[0];
-      var centerY = projection([value.geo.lon, value.geo.lat])[1];
+      var centerX = projection([value['geo']['long'], value['geo']['lat']])[0];
+      var centerY = projection([value['geo']['long'], value['geo']['lat']])[1];
 
       var circle = new Kinetic.Circle({
         x: centerX,
@@ -195,7 +195,7 @@ function drawMap() {
       circle.on('mousemove', function() {
         var mousePos = stage.getMousePosition();
         tooltip.setPosition(mousePos.x + 5, mousePos.y - 20);
-        tooltip.setText(value.label);
+        tooltip.setText(value['name']);
         tooltip.show();
         tooltipLayer.draw();
         document.body.style.cursor = 'pointer';
