@@ -14,9 +14,7 @@ class MainTestCase(unittest.TestCase):
 
     def test_prediction(self):
         """Test prediction."""
-        rv = self.app.get(
-            "/api/prediction?iso=bar&text=De&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NzM1NzY0NTF9.7eFEqa_GH5TA9FXl75cAZ0GwIN7J-UmHcV8LWBqQ1Jk"
-        )
+        rv = self.app.get("/api/prediction?iso=bar&text=De")
         assert "des" in rv.data.decode("utf-8")
 
     def test_languages(self):

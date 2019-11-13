@@ -97,38 +97,3 @@ def about(template):
 @mobile_template("{mobile/}tools_prediction.html")
 def tools_prediction(template, iso):
     return render_template(template, iso=iso)
-
-
-@app.route("/tools/semantics/<iso>", methods=["POST"])
-def tools_semantics_term(iso):
-    term = None
-    if "term" in request.form:
-        term = request.form["term"]
-        term = (
-            "".join([c for c in term if c.isalpha() or c.isdigit() or c == " "])
-            .rstrip()
-            .lower()
-        )
-    target = url_for("tools_semantics", iso=iso, term=term)
-    return redirect(target)
-
-
-@app.route("/tools/semantics/<iso>")
-@app.route("/tools/semantics/<iso>/<term>")
-def tools_semantics(iso, term=None):
-    if term != None:
-        graphdata = main.api.get_semantic_map(iso, term)
-        # if not map_file:
-        # flash('No result for search term "{0}".'.format(term))
-        # else:
-        # return render_template('tools_semantics.html', iso=iso,
-        # map=map_file.encode('utf-8'), term=term)
-        graphdata_json = json.dumps(graphdata)
-        return render_template(
-            "tools_semantics.html",
-            iso=iso,
-            map=None,
-            term=term,
-            graphdata_json=Markup(graphdata_json),
-        )
-    return render_template("tools_semantics.html", iso=iso, map=None, term=term)
