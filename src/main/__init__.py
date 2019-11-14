@@ -54,7 +54,9 @@ def languages_info():
 
 
 languages_info = languages_info()
-languages = sorted(languages_info.keys())
+languages = [
+    l[0] for l in sorted(languages_info.items(), key=lambda k_v: k_v[1]["name"])
+]
 
 
 @app.before_request
