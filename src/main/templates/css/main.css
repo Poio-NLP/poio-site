@@ -295,17 +295,17 @@ section.map img.poio_logo {
  * Section: Documentation
  */
 
-section.documentation p {
+section.community p {
     font-size: 38px;
     margin: 0;
 }
 
-section.documentation p a {
+section.community p a {
     text-decoration: none;
     color: {{ g.color_code }};
 }
 
-section.documentation img.poio_logo {
+section.community img.poio_logo {
     margin-bottom: 52px;
 }
 

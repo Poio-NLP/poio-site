@@ -17,20 +17,20 @@ $('a.icon_prediction').hover(
   }
 );
 
-$('a.icon_documentation').hover(
+$('a.icon_community').hover(
   function() {
-    $('img#icon_documentation').attr(
+    $('img#icon_community').attr(
       'src',
-      '/static/media/img/icon_documentation_selected_{{ g.color }}.png'
+      '/static/media/img/icon_community_selected_{{ g.color }}.png'
     );
-    $('a.icon_documentation').css('color', '{{ g.color_code }}');
+    $('a.icon_community').css('color', '{{ g.color_code }}');
   },
   function() {
-    $('img#icon_documentation').attr(
+    $('img#icon_community').attr(
       'src',
-      '/static/media/img/icon_documentation.png'
+      '/static/media/img/icon_community.png'
     );
-    $('a.icon_documentation').css('color', '#000');
+    $('a.icon_community').css('color', '#000');
   }
 );
 
@@ -53,7 +53,7 @@ $('.nav span a').click(function() {
   $('span.menu_tools').toggleClass('selected', false);
   $('span.menu_team').toggleClass('selected', false);
   $('span.menu_map').toggleClass('selected', false);
-  $('span.menu_documentation').toggleClass('selected', false);
+  $('span.menu_community').toggleClass('selected', false);
   $(this)
     .parent()
     .toggleClass('selected', true);
@@ -72,7 +72,7 @@ $('.main').onepage_scroll({
     $('span.menu_about').toggleClass('selected', false);
     $('span.menu_tools').toggleClass('selected', false);
     $('span.menu_map').toggleClass('selected', false);
-    $('span.menu_documentation').toggleClass('selected', false);
+    $('span.menu_community').toggleClass('selected', false);
     $('a.scroll_down').css('display', 'block');
     $('a.scroll_up').css('display', 'none');
     current_index = parseInt($('section.active').attr('data-index'));
@@ -89,7 +89,7 @@ $('.main').onepage_scroll({
         if (!mapDrawn) drawMap();
         break;
       case 5:
-        $('span.menu_documentation').toggleClass('selected', true);
+        $('span.menu_community').toggleClass('selected', true);
         $('a.scroll_down').css('display', 'none');
         $('a.scroll_up').css('display', 'block');
         break;
@@ -123,7 +123,7 @@ $('a.menu_map').click(function() {
   $('.main').moveTo(4);
 });
 
-$('a.menu_documentation').click(function() {
+$('a.menu_community').click(function() {
   $('.main').moveTo(5);
 });
 
@@ -135,7 +135,7 @@ $('a.icon_map').click(function() {
   $('.main').moveTo(4);
 });
 
-$('a.icon_documentation').click(function() {
+$('a.icon_community').click(function() {
   $('.main').moveTo(5);
 });
 

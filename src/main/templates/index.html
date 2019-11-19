@@ -35,7 +35,7 @@
                 <span class="menu_about"><a class="menu_about" href="#">About</a></span>
                 <span class="menu_tools"><a class="menu_tools" href="#">Text Prediction</a></span>
                 <span class="menu_map"><a class="menu_map" href="#">Map</a></span>
-                <span class="menu_documentation"><a class="menu_documentation" href="#">Documentation</a></span>
+                <span class="menu_community"><a class="menu_community" href="#">Community</a></span>
             </div>
 
             <div id="social">
@@ -63,7 +63,7 @@
                     <p id="tools" class="black centered">
                         <a class="icon_prediction" href="#">Try the text predictor<a>,
                         <a class="icon_map" href="#">explore the map</a>,<br/>
-                        <a class="icon_documentation" href="#">read the documentation</a>.
+                        <a class="icon_community" href="#">join our community</a>.
                     </p>
                     <p class="centered">
                         <a class="icon_prediction" href="#">
@@ -72,8 +72,8 @@
                         <a  class="icon_map" href="#">
                             <img id="icon_map" src="{{ url_for('static', filename='media/img/icon_map.png') }}" style="margin-right:130px;" />
                         </a>
-                        <a  class="icon_documentation" href="#">
-                            <img id="icon_documentation" src="{{ url_for('static', filename='media/img/icon_documentation.png') }}" />
+                        <a  class="icon_community" href="#">
+                            <img id="icon_community" src="{{ url_for('static', filename='media/img/icon_community.png') }}" />
                         </a>
                     </p>
                 </section>
@@ -108,14 +108,22 @@
                         Drag the map to explore the world!
                     </p>
                 </section>
-                <section class="documentation">
+                <section class="community">
                     <a href="#" class="menu_start"><img class="poio_logo" src="{{ url_for('static', filename='media/img/poio_logo_{0}.png'.format(g.color)) }}" /></a>
                     <p class="black centered">
-                        Poio is free and open source.<br/>Read more about the project on readthedocs:
+                        Poio is free and open source.<br><br>Visit the forum to join the community:
                     </p>
                     <p class="green centered">
-                        <a href="http://poio.readthedocs.org">
-                            http://poio.readthedocs.org
+                        <a href="https://forum.poio.eu">
+                            https://forum.poio.eu
+                        </a>
+                    </p>
+                    <p class="black centered">
+                        <br>Read more about the project in the documentation:
+                    </p>
+                    <p class="green centered">
+                        <a href="http://poio.readthedocs.io">
+                            https://poio.readthedocs.io
                         </a>
                     </p>
                 </section>
