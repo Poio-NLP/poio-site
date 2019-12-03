@@ -19,7 +19,7 @@ $("#sendmail").click(function (e) {
     e.stopImmediatePropagation();
     e.preventDefault();
 
-    var link = "mailto:?body=" + $('textarea#prediction').val();
+    var link = "mailto:?body=" + encodeURIComponent($('textarea#prediction').val());
     window.location.href = link;
 });
 
@@ -27,6 +27,6 @@ $("#sendsms").click(function (e) {
     e.stopImmediatePropagation();
     e.preventDefault();
 
-    var link = "sms:?body=" + $('textarea#prediction').val();;
+    var link = "sms:&body=" + $('textarea#prediction').val();
     window.location.href = link;
 });

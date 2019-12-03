@@ -96,9 +96,18 @@ textarea {
 #social {
     position: fixed !important;
     overflow: visible;
-    margin-left: 809px;
+    margin-left: 850px;
     margin-top: 658px;
     z-index: 9999;
+}
+
+#social .colored-link {
+    text-decoration: none;
+    font-size: 16px;
+}
+
+#social .colored-link:hover {
+    text-decoration: underline;
 }
 
 img.social {
@@ -150,7 +159,7 @@ body, .onepage-wrapper, html {
 .nav {
     position: fixed !important;
     overflow: visible;
-    margin-left: 330px;
+    margin-left: 410px;
     margin-top: 62px;
     z-index: 9999;    
 }
