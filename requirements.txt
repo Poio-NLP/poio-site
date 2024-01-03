@@ -1,9 +1,9 @@
 pressagio==0.1.5
 poiolib==0.1.1
-Flask
-Flask-Mobility
-pyjwt
+Flask==1.1.4
+Flask-Mobility==0.1.1
+pyjwt==1.7.1
 psycopg2
-numpy
-scipy
 gunicorn
+markupsafe==2.0.1
+werkzeug==0.16.1
