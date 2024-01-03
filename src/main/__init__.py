@@ -1,31 +1,12 @@
-# -*- coding: utf-8 -*-
-#
-# Poio Corpus
-#
-# Copyright (C) 2009-2019 Poio Project
-# Author: Peter Bouda <pbouda@cidles.eu>
-# URL: <http://media.cidles.eu/poio/>
-# For license information, see LICENSE
-
-import os
-import glob
-import json
-import pickle
 import datetime
 from random import choice
 
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-
-from flask import Flask, render_template, Markup, g, request, url_for, redirect
+import jwt
+import poiolib.langinfo
+from flask import Flask, g, render_template
 from flask_mobility import Mobility
 from flask_mobility.decorators import mobile_template
-import jwt
-import psycopg2
 from werkzeug.contrib.cache import SimpleCache
-import poiolib.langinfo
 
 import main.api
 
@@ -82,7 +63,10 @@ def index(template):
         app.config["SECRET_KEY"],
     ).decode("utf-8")
     return render_template(
-        template, languages=languages, languages_info=languages_info, token=token,
+        template,
+        languages=languages,
+        languages_info=languages_info,
+        token=token,
     )
 
 

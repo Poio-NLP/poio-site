@@ -1,26 +1,15 @@
-import os
-import pickle
 import json
-import operator
+import os
 
 try:
     import configparser
 except ImportError:
     import ConfigParser as configparser
 
-from flask import Blueprint, Flask, request, Response, url_for, current_app
-
-# import rdflib
-import numpy as np
-import scipy.spatial
-import scipy.linalg
 import jwt
-
-import pressagio.callback
 import pressagio
-
-# Import Flask app
-# from main import app
+import pressagio.callback
+from flask import Blueprint, Response, current_app, request
 
 fapi = Blueprint("api", __name__)
 
@@ -67,7 +56,7 @@ def before_request():
             access_granted = True
         except (jwt.DecodeError, jwt.ExpiredSignature):
             pass
-    # return
+
     if not access_granted:
         return Response(
             json.dumps({"error": "You do not have the rights to access the API."}),
