@@ -5,17 +5,7 @@
 
 @font-face {
     font-family: MuseoSans100;
-    src: url("/static/media/fonts/MuseoSans_100Web.eot");
-}
-
-@font-face {
-    font-family: MuseoSans100;
     src: url("/static/media/fonts/MuseoSans_100Web.woff") format("woff");
-}
-
-@font-face {
-    font-family: MuseoSans500;
-    src: url("/static/media/fonts/MuseoSans_500Web.eot");
 }
 
 @font-face {
@@ -232,6 +222,7 @@ section.start p a {
 
 section.about img.poio_logo {
     margin-bottom: 50px;
+    height: 97px;
 }
 
 section.about p {
@@ -252,8 +243,9 @@ section.about p#tools {
  * Section: Tools
  */
 
-section.tools img.poio-logo {
+section.tools img.poio_logo {
     margin-bottom: 75px;
+    height: 97px;
 }
 
 section.tools p {
@@ -298,6 +290,7 @@ p#predictor span.predicted-word-inside {
 
 section.map img.poio_logo {
     margin-bottom: 0px;
+    height: 97px;
 }
 
 /*
@@ -316,6 +309,7 @@ section.community p a {
 
 section.community img.poio_logo {
     margin-bottom: 52px;
+    height: 97px;
 }
 
 p.green {
