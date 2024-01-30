@@ -260,9 +260,13 @@ section.tools p a {
 section.tools textarea {
     font-family: MuseoSans100, sans-serif;
     background-color: #f2f2f3;
-    width: 100%;
+    width: 98%;
     text-align: center;
     border: none;
+}
+
+section.tools textarea:focus {
+    outline-color: {{ g.color_code }};
 }
 
 section.tools select option {
