@@ -267,6 +267,7 @@ section.tools textarea {
 
 section.tools textarea:focus {
     outline-color: {{ g.color_code }};
+    outline-style: solid;
 }
 
 section.tools select option {
